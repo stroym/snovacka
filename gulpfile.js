@@ -1,19 +1,19 @@
-var gulp = require("gulp");
-var browserify = require("browserify");
-var source = require("vinyl-source-stream");
-var tsify = require("tsify");
+var gulp = require("gulp")
+var browserify = require("browserify")
+var source = require("vinyl-source-stream")
+var tsify = require("tsify")
 var paths = {
   pages: ["src/*.html"],
   styles: ["src/*.css"]
-};
+}
 
 gulp.task("copy-html", function () {
-  return gulp.src(paths.pages).pipe(gulp.dest("dist"));
-});
+  return gulp.src(paths.pages).pipe(gulp.dest("dist"))
+})
 
 gulp.task("copy-css", function () {
-  return gulp.src(paths.styles).pipe(gulp.dest("dist"));
-});
+  return gulp.src(paths.styles).pipe(gulp.dest("dist"))
+})
 
 gulp.task("browserify", function () {
   return browserify({
@@ -25,7 +25,7 @@ gulp.task("browserify", function () {
   }).plugin(tsify)
     .bundle()
     .pipe(source("bundle.js"))
-    .pipe(gulp.dest("dist"));
+    .pipe(gulp.dest("dist"))
 })
 
 gulp.task("default", gulp.series(
@@ -33,4 +33,4 @@ gulp.task("default", gulp.series(
   gulp.parallel("copy-css"),
   gulp.parallel("browserify")
   )
-);
+)
