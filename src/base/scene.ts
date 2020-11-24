@@ -1,26 +1,41 @@
-export class Scene {
+import {Character} from "./character";
 
-  readonly id: number;
+export abstract class Scene {
 
-  readonly parent?: Scene;
-  readonly children?: Scene[];
+  private readonly _id: number = 0;
+  private readonly _prompt: string = "";
 
-  constructor(id: number) {
-    this.id = id;
+  private readonly _children: Scene[] = [];
+  private readonly _participants: Character[] = [];
+
+  // constructor(id: number, prompt: string) {
+  //
+  // }
+
+  get id(): number {
+    return this._id;
   }
 
-
-  public render() {
-    return "test test _\"test direct speech\"_ \n blob";
+  get prompt(): string {
+    return this._prompt;
   }
 
-  private static italicize(text: string) {
-    var temp = text.replace(" \_"," <i>")
-    return temp.replace("\_ ","<i/> ")
+  get children(): Scene[] {
+    return this._children;
   }
 
-  public transition() {
+  get participants(): Character[] {
+    return this._participants;
+  }
 
+  public abstract render(): string;
+
+  public transition(n: number): Scene {
+    return this._children[n - 1];
+  }
+
+  public addChild(child: Scene, prompt: string) {
+    this._children.push(child);
   }
 
 }

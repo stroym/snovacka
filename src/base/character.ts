@@ -1,18 +1,18 @@
-export class Character {
+export abstract class Character {
 
-  name: string;
-  sex: Character.Sex;
-  physique: Character.Physique;
+  _name: string;
+  _sex: Character.Sex;
+  _physique?: Character.Physique;
 
-  pronouns: Character.Pronouns;
-  attributes: Character.Attributes;
+  _pronouns: Character.Pronouns;
+  _attributes?: Character.Attributes;
 
-  constructor(name: string, sex: Character.Sex, physique: Character.Physique, attributes: Character.Attributes) {
-    this.name = name;
-    this.sex = sex;
-    this.physique = physique;
-    this.pronouns = Character.Pronouns.pickPronouns(sex);
-    this.attributes = attributes;
+  protected constructor(name: string, sex: Character.Sex, physique?: Character.Physique, attributes?: Character.Attributes) {
+    this._name = name;
+    this._sex = sex;
+    this._physique = physique;
+    this._pronouns = Character.Pronouns.pickPronouns(sex);
+    this._attributes = attributes;
   }
 
 }
@@ -30,11 +30,9 @@ export namespace Character {
 
     public static pickPronouns(sex: Character.Sex) {
       switch (sex) {
-        case Sex.F:
-        case Sex.IF:
+        case Sex.MASCULINE:
           return Pronouns.FemalePronouns;
-        case Sex.M:
-        case Sex.IM:
+        case Sex.FEMININE:
           return Pronouns.MalePronouns;
       }
     }
@@ -56,10 +54,8 @@ export namespace Character {
   }
 
   export enum Sex {
-    F = "female",
-    M = "male",
-    IF = "intersex-feminine",
-    IM = "intersex-masculine"
+    MASCULINE = "male",
+    FEMININE = "female"
   }
 
 }

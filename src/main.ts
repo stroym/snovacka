@@ -1,19 +1,46 @@
-import { Scene } from "./base/Scene"
+import {Character} from "./base/character";
+import {pcAlex} from "./pc/pcAlex";
+import {npcEliza} from "./npc/npcEliza";
+import {selection} from "./base/selection";
+import {render, renderAdditive} from "./renderer";
 
-var textArea = document.getElementById('text-area')!;
-textArea.addEventListener('click', render);
+export var textArea = document.getElementById('text-area')!;
+textArea.addEventListener('click', init);
 
-function render() {
+export let pc: Character = new pcAlex();
+let eliza: Character = new npcEliza();
 
-  let bob = new Scene(1)
+function init() {
+  render("Welcome...")
 
-
-  document.getElementById('text-area')!.innerHTML = bob.render()
-
+  textArea.removeEventListener('click', init)
+  textArea.addEventListener('click', intro)
 }
 
-function hello(compiler: string) {
-  console.log(`Hello from ${compiler}`);
-}
 
-hello("TypeScript");
+function intro() {
+  textArea.removeEventListener('click', intro)
+
+  render("Hi!")
+
+  let sel = selection.buildOption(1, "prompt1");
+
+  // let cr: crossroads = new crossroads([
+  //   selection.buildOption(1, "prompt1"),
+  //   selection.buildOption(2, "prompt2"),
+  //   selection.buildOption(3, "prompt3")
+  // ])
+
+
+  renderAdditive(sel.render())
+
+
+//probably use fori so I can get rid of order
+//   for (let opt of cr.selections) {
+//     renderAdditive(opt.order + ": " + opt.prompt)
+//   }
+
+  //get user input
+  //pick selection & run function
+
+}
