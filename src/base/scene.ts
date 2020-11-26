@@ -1,4 +1,5 @@
-import {Character} from "./character"
+import {character} from "./character/character";
+import Character = character.Character;
 
 export abstract class Scene {
 

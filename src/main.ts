@@ -1,15 +1,15 @@
-import {Character} from "./base/character"
-import {pcAlex} from "./pc/pcAlex"
-import {npcEliza} from "./npc/npcEliza"
 import {buildOption, prefix, render} from "./helper/renderer";
 import * as resolver from "./helper/resolver";
 import {resolveKeypress} from "./helper/background";
+import {character} from "./base/character/character";
+import {PcAlex} from "./character/pc/pcAlex";
+import {NpcEliza} from "./character/npc/npcEliza";
+import Character = character.Character;
 
 export let textArea = document.getElementById('text-area')!
 export let options: HTMLAnchorElement[] = [];
-export let pc: Character = new pcAlex()
-export let eliza: Character = new npcEliza()
-
+export let pc: Character = new PcAlex()
+export let eliza: Character = new NpcEliza()
 
 function init() {
   render("Welcome...")
