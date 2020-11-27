@@ -1,9 +1,8 @@
 export abstract class Scene {
+  readonly id: number;
+  readonly prompt: string;
 
-  readonly id: number
-  readonly prompt: string
-
-  readonly scenes: Array<Scene>
+  readonly scenes: Array<Scene>;
 
   // private readonly _participants: Character[] = []
 
@@ -12,16 +11,15 @@ export abstract class Scene {
     this.prompt = prompt;
 
     if (scenes) {
-      this.scenes = scenes
+      this.scenes = scenes;
     } else {
-      this.scenes = []
+      this.scenes = [];
     }
   }
 
-  abstract render(): string
+  abstract render(): string;
 
   transition(n: number): Scene {
-    return this.scenes[n - 1]
+    return this.scenes[n - 1];
   }
-
 }

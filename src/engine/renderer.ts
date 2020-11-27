@@ -4,46 +4,45 @@ import {Scene} from "../base/scene";
 export let options: HTMLAnchorElement[] = [];
 
 export function render(text: string) {
-  textArea.innerHTML = text
+  textArea.innerHTML = text;
 }
 
 export function renderAdditive(text: string) {
-  textArea.innerHTML += text
+  textArea.innerHTML += text;
 }
 
 export function buildOption(prompt: string, target: Scene) {
-  let a = document.createElement('a')
-  a.textContent = prompt
-  a.href = "javascript:;"
+  const a = document.createElement("a");
+  a.textContent = prompt;
+  a.href = "javascript:;";
 
   a.addEventListener("click", function () {
-    render(target.render())
-  })
+    render(target.render());
+  });
 
-  return a
+  return a;
 }
 
 export function prefix(a: any, order: number) {
-  a.textContent = order + ": " + a.textContent
-  a.order = order
+  a.textContent = order + ": " + a.textContent;
+  a.order = order;
 
-  return a
+  return a;
 }
 
 export function printOptions(scene: Scene) {
-  options = []
+  options = [];
 
-  for (let s of scene.scenes) {
-    options.push(buildOption(s.prompt, s))
+  for (const s of scene.scenes) {
+    options.push(buildOption(s.prompt, s));
   }
 
   for (let i = 0; i < options.length; i++) {
-    textArea.append(prefix(options[i], i + 1))
+    textArea.append(prefix(options[i], i + 1));
   }
 
   //what should even actually happen? on valid click render next scene
   //how to associate the key pressed/link clicked with what to do
 
-  scene.transition(0)
-
+  scene.transition(0);
 }

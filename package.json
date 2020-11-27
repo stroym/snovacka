@@ -1,10 +1,22 @@
 {
-  "name": "nheyrs-garden",
+  "name": "snovacka",
   "version": "0.0.0",
-  "description": "Proof of concept for a lewd textbased game.",
+  "description": "Engine for making text based games",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stroym/nheyrs-garden"
+  },
+  "author": "stroym",
+  "license": "ISC",
   "dependencies": {
-    "gulp-cli": "^2.3.0"
+    "@typescript-eslint/eslint-plugin": "^4.8.2",
+    "@typescript-eslint/parser": "^4.8.2",
+    "eslint": "^7.14.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "gulp-cli": "^2.3.0",
+    "prettier": "^2.2.0"
   },
   "devDependencies": {
     "@tsconfig/recommended": "^1.0.1",
@@ -16,8 +28,25 @@
     "vinyl-source-stream": "^2.0.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint '*/**/*.ts' --quiet --fix"
   },
-  "author": "stroym",
-  "license": "ISC"
+  "eslintConfig": {
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "ecmaVersion": 2020,
+      "sourceType": "module"
+    },
+    "extends": [
+      "plugin:@typescript-eslint/recommended",
+      "prettier/@typescript-eslint",
+      "plugin:prettier/recommended"
+    ],
+    "rules": {}
+  },
+  "prettier": {
+    "semi": true,
+    "printWidth": 120,
+    "tabWidth": 2
+  }
 }

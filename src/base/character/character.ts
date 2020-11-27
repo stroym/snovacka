@@ -1,28 +1,26 @@
-//TODO mental things missing: affection, dis/likes etc.
-import {Descriptions} from "./descriptions";
 import {Name} from "./name";
-import {body} from "./body";
 import {Archetype} from "./archetype";
-import Body = body.Body;
+import {Descriptions} from "./descriptions";
+import {Body} from "./body";
 
 export abstract class Character {
+  //TODO mental things missing: affection, dis/likes etc.
 
-  name: Name
+  name: Name;
   //_species: Species,
-  archetype: Archetype
-  body: Body
+  archetype: Archetype;
+  body: Body;
 
-  descriptions: Descriptions
+  descriptions: Descriptions;
 
   //TODO attributes: Character.Attributes
 
-  constructor(name: Name, archetype: Archetype, body: body.Body) {
+  constructor(name: Name, archetype: Archetype, body: Body) {
     this.name = name;
     this.archetype = archetype;
     this.body = body;
-    this.descriptions = Descriptions.pickPronouns(archetype)
+    this.descriptions = Descriptions.pickPronouns(archetype);
   }
-
 }
 
 //TODO don't forget size check resolvers (ergo come up with some size ratings and set up logic x can/can't fit into y)

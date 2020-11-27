@@ -1,5 +1,4 @@
 export class Name {
-
   //TODO maybe add more nickname variations
 
   readonly firstName: string;
@@ -11,5 +10,4 @@ export class Name {
     this.lastName = lastName;
     this.nickName = nickName;
   }
-
 }

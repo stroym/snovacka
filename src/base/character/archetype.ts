@@ -4,5 +4,5 @@ export enum Archetype {
   CUNTBOY,
   FEMALE,
   DICKGIRL,
-  FUTA
+  FUTA,
 }

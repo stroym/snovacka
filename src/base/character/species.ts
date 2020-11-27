@@ -1,7 +1,5 @@
 export class Species {
-
-  private name: string = ""
+  private name = "";
 
   //TODO use concrete impementations as is the case with characters
-
 }
