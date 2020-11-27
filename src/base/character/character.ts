@@ -2,35 +2,29 @@
 import {Descriptions} from "./descriptions";
 import {Name} from "./name";
 import {body} from "./body";
+import {Archetype} from "./archetype";
 import Body = body.Body;
 
-export module character {
+export abstract class Character {
 
-  export abstract class Character {
+  name: Name
+  //_species: Species,
+  archetype: Archetype
+  body: Body
 
-    private _descriptions: Descriptions
+  descriptions: Descriptions
 
-    protected constructor(
-      private _name: Name,
-      // private _species: Species,
-      private _archetype: Archetype,
-      private _body: Body
-      //TODO private _attributes: Character.Attributes
-    ) {
-      this._descriptions = Descriptions.pickPronouns(_archetype)
-    }
+  //TODO attributes: Character.Attributes
 
+  constructor(name: Name, archetype: Archetype, body: body.Body) {
+    this.name = name;
+    this.archetype = archetype;
+    this.body = body;
+    this.descriptions = Descriptions.pickPronouns(archetype)
   }
-
-  export enum Archetype {
-    //GENDERLESS
-    MALE,
-    CUNTBOY,
-    FEMALE,
-    DICKGIRL,
-    FUTA
-  }
-
-  //TODO don't forget size check resolvers (ergo come up with some size ratings and set up logic x can/can't fit into y)
 
 }
+
+//TODO don't forget size check resolvers (ergo come up with some size ratings and set up logic x can/can't fit into y)
+
+//TODO figure out how the hell modules/namespaces work with "inner" classes

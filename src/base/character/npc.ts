@@ -1,5 +1,4 @@
-import {character} from "./character";
-import Character = character.Character;
+import {Character} from "./character";
 
 export class Npc extends Character {
 

@@ -1,10 +1,10 @@
-import {character} from "../../base/character/character";
-import {Pc} from "../../base/character/pc";
-import {body} from "../../base/character/body";
-import {Name} from "../../base/character/name";
+import {Name} from "../../../base/character/name";
+import {body} from "../../../base/character/body";
+import {Pc} from "../../../base/character/pc";
+import {Archetype} from "../../../base/character/archetype";
+import General = body.General;
 import Breasts = body.Breasts;
 import Orifice = body.Orifice;
-import General = body.General;
 import Body = body.Body;
 
 export class PcAmalia extends Pc {
@@ -12,7 +12,7 @@ export class PcAmalia extends Pc {
   constructor() {
     super(
       new Name("Amalia"),
-      character.Archetype.FEMALE,
+      Archetype.FEMALE,
       Body.makeFemale(
         new General(),
         new Breasts(),

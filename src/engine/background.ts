@@ -1,4 +1,4 @@
-import {options} from "../main";
+import {options} from "./renderer";
 
 export function resolveKeypress(e: KeyboardEvent) {
   //TODO switch between options on up/down +/- press?

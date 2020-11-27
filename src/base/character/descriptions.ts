@@ -1,16 +1,20 @@
-import {character} from "./character";
-import Archetype = character.Archetype;
+//TODO this could be an interface, maybe?
+
+import {Archetype} from "./archetype";
 
 export class Descriptions {
 
   private static masculine = new Descriptions("he", "him", "his")
   private static feminine = new Descriptions("she", "her", "hers")
 
-  constructor(
-    private readonly _subjective: string,
-    private readonly _objective: string,
-    private readonly _possessive: string
-  ) {
+  readonly subjective: string
+  readonly objective: string
+  readonly possessive: string
+
+  constructor(subjective: string, objective: string, possessive: string) {
+    this.subjective = subjective;
+    this.objective = objective;
+    this.possessive = possessive;
   }
 
   public static pickPronouns(archetype: Archetype) {

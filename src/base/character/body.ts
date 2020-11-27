@@ -2,14 +2,20 @@ export module body {
 
   export class Body {
 
-    constructor(
-      private _general: General,
-      private _breasts: Breasts,
-      private _mouth: Orifice,
-      private _anus: Orifice,
-      private _vagina?: Orifice,
-      private _penis?: Penis
-    ) {
+    general: General
+    breasts: Breasts
+    mouth: Orifice
+    anus: Orifice
+    vagina?: Orifice
+    penis?: Penis
+
+    constructor(general: body.General, breasts: body.Breasts, mouth: body.Orifice, anus: body.Orifice, vagina?: body.Orifice, penis?: body.Penis) {
+      this.general = general;
+      this.breasts = breasts;
+      this.mouth = mouth;
+      this.anus = anus;
+      this.vagina = vagina;
+      this.penis = penis;
     }
 
     public static makeMale(general: General, breasts: Breasts, mouth: Orifice, anus: Orifice, penis: Penis) {
@@ -37,20 +43,24 @@ export module body {
   export class General {
     //TODO maybe more detailed body information?
 
-    constructor(
-      private _height: number = 0,
-      private _weight: number = 0,
-      private _build: string = ""
-    ) {
+    height: number = 0
+    weight: number = 0
+    build: string = ""
+
+    constructor(height: number = 0, weight: number = 0, build: string = "") {
+      this.height = height;
+      this.weight = weight;
+      this.build = build;
     }
 
   }
 
   abstract class Virgin {
 
-    protected constructor(
-      private _virginity: boolean
-    ) {
+    virginity: boolean
+
+    protected constructor(virginity: boolean) {
+      this.virginity = virginity;
     }
 
   }
@@ -63,60 +73,78 @@ export module body {
 
   export class Contents {
 
-    constructor(
-      private _type: string,
-      private _amount: number
-    ) {
+    type: string
+    amount: number
+
+    constructor(type: string, amount: number) {
+      this.type = type;
+      this.amount = amount;
     }
 
   }
 
   export class Orifice extends Virgin {
 
-    constructor(
-      virginity: boolean = true,
-      private _depth: number = 0,
-      private _width: number = 0,
-      private _elasticity: number = 0,
-      private _contents?: Contents
-    ) {
-      super(virginity)
+    depth: number
+    width: number
+    elasticity: number
+    contents?: Contents
+
+    constructor(virginity: boolean = true, depth: number = 0, width: number = 0, elasticity: number = 0, contents?: body.Contents) {
+      super(virginity);
+      this.depth = depth;
+      this.width = width;
+      this.elasticity = elasticity;
+      this.contents = contents;
     }
 
   }
 
   export class Penis extends Virgin {
 
-    constructor(
-      virginity: boolean = true,
-      private _length: number = 0,
-      private _girth: number = 0,
-      private _urethra: Orifice = new Orifice(),
-      private _balls?: Balls
-    ) {
+    virginity: boolean
+    length: number
+    girth: number
+    urethra: Orifice
+    balls?: Balls
+
+    constructor(virginity: boolean = true, length: number = 0, girth: number = 0, urethra: body.Orifice = new Orifice(), balls?: body.Balls) {
       super(virginity);
+      this.virginity = virginity;
+      this.length = length;
+      this.girth = girth;
+      this.urethra = urethra;
+      this.balls = balls;
     }
+
   }
 
   export class Balls {
 
-    constructor(
-      private _size: number = 0,
-      private _contents?: Contents
-    ) {
+    size: number = 0
+    contents?: Contents
+
+    constructor(size: number = 0, contents?: body.Contents) {
+      this.size = size;
+      this.contents = contents;
     }
 
   }
 
   export class Breasts {
 
-    constructor(
-      private _cupSize: string = "",
-      private _bandSize: number = 0,
-      private _areolaSize: number = 0,
-      private _nippleSize: number = 0,
-      private _fuckableNipples?: Orifice
-    ) {
+    cupSize: string
+    bandSize: number
+    areolaSize: number
+    nippleSize: number
+    fuckableNipples?: Orifice
+
+    constructor(cupSize: string = "", bandSize: number = 0, areolaSize: number = 0, nippleSize: number = 0, fuckableNipples?: body.Orifice) {
+      this.cupSize = cupSize;
+      this.bandSize = bandSize;
+      this.areolaSize = areolaSize;
+      this.nippleSize = nippleSize;
+      this.fuckableNipples = fuckableNipples;
     }
 
     //TODO make some reasonable defaults

@@ -1,42 +1,27 @@
-import {character} from "./character/character";
-import Character = character.Character;
-
 export abstract class Scene {
 
-  private readonly _id: number = 0
-  private readonly _prompt: string = ""
+  readonly id: number
+  readonly prompt: string
 
-  private readonly _children: Scene[] = []
-  private readonly _participants: Character[] = []
+  readonly scenes: Array<Scene>
 
-  // constructor(id: number, prompt: string) {
-  //
-  // }
+  // private readonly _participants: Character[] = []
 
-  get id(): number {
-    return this._id
+  protected constructor(id: number, prompt: string, scenes?: Array<Scene>) {
+    this.id = id;
+    this.prompt = prompt;
+
+    if (scenes) {
+      this.scenes = scenes
+    } else {
+      this.scenes = []
+    }
   }
 
-  get prompt(): string {
-    return this._prompt
-  }
+  abstract render(): string
 
-  get children(): Scene[] {
-    return this._children
-  }
-
-  get participants(): Character[] {
-    return this._participants
-  }
-
-  public abstract render(): string
-
-  public transition(n: number): Scene {
-    return this._children[n - 1]
-  }
-
-  public addChild(child: Scene, prompt: string) {
-    this._children.push(child)
+  transition(n: number): Scene {
+    return this.scenes[n - 1]
   }
 
 }

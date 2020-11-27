@@ -2,11 +2,14 @@ export class Name {
 
   //TODO maybe add more nickname variations
 
-  constructor(
-    private readonly _firstName: string,
-    private readonly _lastName?: string,
-    private readonly _nickName?: string
-  ) {
+  readonly firstName: string;
+  readonly lastName?: string;
+  readonly nickName?: string;
+
+  constructor(firstName: string, lastName?: string, nickName?: string) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.nickName = nickName;
   }
 
 }

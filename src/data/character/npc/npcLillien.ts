@@ -1,13 +1,12 @@
-import {Npc} from "../../base/character/npc";
-import {character} from "../../base/character/character";
-import {body} from "../../base/character/body";
-import {Name} from "../../base/character/name";
-import Archetype = character.Archetype;
-import Penis = body.Penis;
+import {Npc} from "../../../base/character/npc";
+import {body} from "../../../base/character/body";
+import {Name} from "../../../base/character/name";
+import {Archetype} from "../../../base/character/archetype";
+import Body = body.Body;
+import General = body.General;
 import Breasts = body.Breasts;
 import Orifice = body.Orifice;
-import General = body.General;
-import Body = body.Body;
+import Penis = body.Penis;
 
 export class NpcLillien extends Npc {
 

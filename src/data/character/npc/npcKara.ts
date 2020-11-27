@@ -1,12 +1,11 @@
-import {Npc} from "../../base/character/npc";
-import {character} from "../../base/character/character";
-import {body} from "../../base/character/body";
-import {Name} from "../../base/character/name";
-import Archetype = character.Archetype;
-import Penis = body.Penis;
+import {Name} from "../../../base/character/name";
+import {body} from "../../../base/character/body";
+import {Npc} from "../../../base/character/npc";
+import {Archetype} from "../../../base/character/archetype";
+import General = body.General;
 import Breasts = body.Breasts;
 import Orifice = body.Orifice;
-import General = body.General;
+import Penis = body.Penis;
 import Body = body.Body;
 
 export class NpcKara extends Npc {
