@@ -1,7 +1,6 @@
 import {Name} from "./name";
-import {Archetype} from "./archetype";
 import {Descriptions} from "./descriptions";
-import {Body} from "./body";
+import {Appearance} from "./body/appearance";
 
 export abstract class Character {
   //TODO mental things missing: affection, dis/likes etc.
@@ -9,20 +8,31 @@ export abstract class Character {
   name: Name;
   //_species: Species,
   archetype: Archetype;
-  body: Body;
+  //details = likes/dislikes/sexual preferences etc. maybe age and some other stuff, but probably put that somewhere else
+  appearance: Appearance;
 
   descriptions: Descriptions;
 
   //TODO attributes: Character.Attributes
 
-  constructor(name: Name, archetype: Archetype, body: Body) {
+  constructor(name: Name, archetype: Archetype, appearance: Appearance) {
     this.name = name;
     this.archetype = archetype;
-    this.body = body;
+    this.appearance = appearance;
     this.descriptions = Descriptions.pickPronouns(archetype);
   }
+
 }
 
-//TODO don't forget size check resolvers (ergo come up with some size ratings and set up logic x can/can't fit into y)
+//TODO size etc. transition methods
 
-//TODO figure out how the hell modules/namespaces work with "inner" classes
+export enum Archetype {
+
+  //GENDERLESS
+  MALE,
+  CUNTBOY,
+  FEMALE,
+  DICKGIRL,
+  FUTA
+
+}

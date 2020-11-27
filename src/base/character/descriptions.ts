@@ -1,8 +1,9 @@
 //TODO this could be an interface, maybe?
 
-import {Archetype} from "./archetype";
+import {Archetype} from "./character";
 
 export class Descriptions {
+
   private static masculine = new Descriptions("he", "him", "his");
   private static feminine = new Descriptions("she", "her", "hers");
 
@@ -29,4 +30,11 @@ export class Descriptions {
         throw new Error("Invalid Character.Archetype value!"); //this shouldn't happen, unless you're stupid
     }
   }
+
+}
+
+export interface Describeable {
+
+  description: string;
+
 }

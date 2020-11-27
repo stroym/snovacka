@@ -10,4 +10,5 @@ export class Name {
     this.lastName = lastName;
     this.nickName = nickName;
   }
+
 }

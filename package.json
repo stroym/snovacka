@@ -13,10 +13,7 @@
     "@typescript-eslint/eslint-plugin": "^4.8.2",
     "@typescript-eslint/parser": "^4.8.2",
     "eslint": "^7.14.0",
-    "eslint-config-prettier": "^6.15.0",
-    "eslint-plugin-prettier": "^3.1.4",
-    "gulp-cli": "^2.3.0",
-    "prettier": "^2.2.0"
+    "gulp-cli": "^2.3.0"
   },
   "devDependencies": {
     "@tsconfig/recommended": "^1.0.1",
@@ -38,15 +35,28 @@
       "sourceType": "module"
     },
     "extends": [
-      "plugin:@typescript-eslint/recommended",
-      "prettier/@typescript-eslint",
-      "plugin:prettier/recommended"
+      "plugin:@typescript-eslint/recommended"
     ],
-    "rules": {}
+    "rules": {
+      "semi": "error",
+      "no-multiple-empty-lines": [
+        "error",
+        {
+          "max": 1,
+          "maxBOF": 1,
+          "maxEOF": 1
+        }
+      ]
+    }
   },
-  "prettier": {
-    "semi": true,
-    "printWidth": 120,
-    "tabWidth": 2
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.ts": [
+      "npm run lint"
+    ]
   }
 }

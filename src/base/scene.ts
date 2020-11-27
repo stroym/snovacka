@@ -1,4 +1,5 @@
 export abstract class Scene {
+
   readonly id: number;
   readonly prompt: string;
 
@@ -7,6 +8,7 @@ export abstract class Scene {
   // private readonly _participants: Character[] = []
 
   protected constructor(id: number, prompt: string, scenes?: Array<Scene>) {
+
     this.id = id;
     this.prompt = prompt;
 
@@ -15,6 +17,7 @@ export abstract class Scene {
     } else {
       this.scenes = [];
     }
+
   }
 
   abstract render(): string;
@@ -22,4 +25,5 @@ export abstract class Scene {
   transition(n: number): Scene {
     return this.scenes[n - 1];
   }
+
 }
