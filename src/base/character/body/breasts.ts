@@ -1,5 +1,4 @@
-import {Size} from "./appearance";
-import {Orifice} from "./orifice";
+import {Contents, Penetrable} from "./penetrable";
 
 export class Breasts {
 
@@ -16,24 +15,26 @@ export class Breasts {
 
 }
 
-export class Nipples implements Size {
+export class Nipples {
 
   length: number;
   width: number;
+  //TODO, probably type - normal, penis nipples, fuckable nipples possibly create subclasses?
   areolaSize: number;
-  fuckable?: FuckableNipples;
+  contents?: Contents;
+  penetrable?: FuckableNipples;
 
-
-  constructor(length: number, width: number, areolaSize: number, fuckable?: FuckableNipples) {
+  constructor(length: number, width: number, areolaSize: number, contents = undefined, penetrable = undefined) {
     this.length = length;
     this.width = width;
     this.areolaSize = areolaSize;
-    this.fuckable = fuckable;
+    this.contents = contents;
+    this.penetrable = penetrable;
   }
 
 }
 
-class FuckableNipples extends Orifice {
+class FuckableNipples extends Penetrable {
 
 }
 

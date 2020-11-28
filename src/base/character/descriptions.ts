@@ -17,7 +17,7 @@ export class Descriptions {
     this.possessive = possessive;
   }
 
-  public static pickPronouns(archetype: Archetype) {
+  static pickPronouns(archetype: Archetype): Descriptions {
     switch (archetype) {
       case Archetype.MALE:
       case Archetype.CUNTBOY:

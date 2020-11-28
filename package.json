@@ -10,14 +10,15 @@
   "author": "stroym",
   "license": "ISC",
   "dependencies": {
-    "@typescript-eslint/eslint-plugin": "^4.8.2",
-    "@typescript-eslint/parser": "^4.8.2",
-    "eslint": "^7.14.0",
-    "gulp-cli": "^2.3.0"
+    "gulp-cli": "^2.3.0",
+    "pre-commit": "^1.2.2"
   },
   "devDependencies": {
     "@tsconfig/recommended": "^1.0.1",
+    "@typescript-eslint/eslint-plugin": "^4.8.2",
+    "@typescript-eslint/parser": "^4.8.2",
     "browserify": "^17.0.0",
+    "eslint": "^7.14.0",
     "gulp": "^4.0.0",
     "gulp-typescript": "^6.0.0-alpha.1",
     "tsify": "^5.0.2",
@@ -34,11 +35,29 @@
       "ecmaVersion": 2020,
       "sourceType": "module"
     },
+    "plugins": [
+      "@typescript-eslint"
+    ],
     "extends": [
+      "eslint:recommended",
       "plugin:@typescript-eslint/recommended"
     ],
     "rules": {
-      "semi": "error",
+      "indent": [
+        "error",
+        2,
+        {
+          "SwitchCase": 1
+        }
+      ],
+      "quotes": [
+        "error",
+        "double"
+      ],
+      "semi": [
+        "error",
+        "always"
+      ],
       "no-multiple-empty-lines": [
         "error",
         {
@@ -46,17 +65,11 @@
           "maxBOF": 1,
           "maxEOF": 1
         }
-      ]
+      ],
+      "no-empty-function": "warn"
     }
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.ts": [
-      "npm run lint"
-    ]
-  }
+  "pre-commit": [
+    "lint"
+  ]
 }

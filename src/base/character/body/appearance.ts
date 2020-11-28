@@ -1,12 +1,13 @@
-import {Anus, Mouth, Vagina} from "./orifice";
-import {Penis} from "./penis";
+import {Anus, Mouth, Vagina} from "./penetrable";
+import {Penis} from "./insertable";
 import {Breasts} from "./breasts";
 
 export class Appearance {
 
   general: General;
   //TODO attachments/mods = tattoos, piercings, scars etc.
-  //TODO general body description (skin/fur/chitin/synth?), body parts? given there's x-taurs, probably
+  //TODO general body description (skin/fur/chitin/synth?), body parts and their types
+  //TODO upper/lower body things - concerns mainly x-taur lovelies
   breasts: Breasts;
   mouth: Mouth;
   anus: Anus;

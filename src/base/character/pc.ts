@@ -1,7 +1,12 @@
-import {Character} from "./character";
+import {Archetype, Character} from "./character";
+import {Name} from "./name";
+import {Appearance} from "./body/appearance";
+import {AttributesPc} from "./attributes";
 
 export class Pc extends Character {
 
-  //TODO common PC attributes
+  constructor(name: Name, archetype: Archetype, appearance: Appearance, attributes: AttributesPc) {
+    super(name, archetype, appearance, attributes);
+  }
 
 }
