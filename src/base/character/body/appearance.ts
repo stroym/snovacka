@@ -50,7 +50,6 @@ export class Appearance {
 
 export class General {
   //TODO maybe more detailed body information?
-  //TODO move its own things, if it grows (or maybe it'll get merged with things
 
   height: number;
   weight: number;
@@ -72,9 +71,23 @@ export interface Virgin {
 
 }
 
-export interface Size {
+export class Contents {
 
-  length: number;
-  width: number;
+  type: string;
+  current: number;
+  capacity: number;
+
+  /**
+   * Meant for liquids, but can also be used for solids such as eggs.
+   *
+   * @param type - type of "filling"
+   * @param amount  - current amount stored in ml
+   * @param capacity - maximum amount that can be stored in ml
+   */
+  constructor(type: string, amount: number, capacity: number) {
+    this.type = type;
+    this.current = amount;
+    this.capacity = capacity;
+  }
 
 }

@@ -1,5 +1,5 @@
-//TODO this could be an interface, maybe?
-
+//TODO we'll see how useful this gets... at very least it could facilitate generating personality/appearance texts
+//beyond that good for making random characters, but that's not snovacka's intended use case (at least not right now)
 import {Archetype} from "./character";
 
 export class Descriptions {

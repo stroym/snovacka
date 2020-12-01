@@ -10,8 +10,10 @@ export abstract class Character {
   archetype: Archetype;
   appearance: Appearance;
   //personality = likes/dislikes/sexual preferences etc.
-  //age, height, weight etc in its own general info thing?
-  attributes: Attributes
+  //age, height, weight etc should probably be in its own small general thing
+  attributes: Attributes  //for now a class is much easier to work with, but down the line this'll probably need to be an array,
+  // especially if there's GUI generation - unless I can figure out how to make that work with a class
+  // we'll see what happens once this thing actually does something
   descriptions: Descriptions;
 
   protected constructor(name: Name, archetype: Archetype, appearance: Appearance, attributes: Attributes) {
@@ -20,7 +22,6 @@ export abstract class Character {
     this.appearance = appearance;
     this.attributes = attributes;
     this.descriptions = Descriptions.pickPronouns(archetype);
-
   }
 
 }

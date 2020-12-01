@@ -1,39 +1,34 @@
-import {Virgin} from "./appearance";
+import {Contents, Virgin} from "./appearance";
 
-export class Contents {
+export class Capacity {
 
-  type: string;
-  current: number;
-  capacity: number;
+  depth: number;
+  width: number;
+  elasticity: number;   // - some threshold for determining when stretching has long-term effect is likely necessary; might wanna make a class for that
+  recovery: number;     //how well an orifice can recover from stretching (ergo how much - if at all - will base capacity increase after stretching
+  //tightness? maybe, I guess = calculated value, probably
+  contents?: Contents;
 
-  constructor(type: string, amount: number, capacity: number) {
-    this.type = type;
-    this.current = amount;
-    this.capacity = capacity;
+  constructor(depth: number, width: number, elasticity: number, recovery: number) {
+    this.depth = depth;
+    this.width = width;
+    this.elasticity = elasticity;
+    this.recovery = recovery;
   }
 
 }
 
 export abstract class Penetrable implements Virgin {
 
+  capacity: Capacity
   virginity: boolean;
-  depth: number;
-  width: number;
-  elasticity: number; // how much more can fit inside above base capacity
-  // - some threshold for determining when stretching has long-term effect is likely necessary; might wanna make a class for that
-  //recovery: number; how well an orifice can recover from stretching (ergo how much - if at all - will base capacity increase after stretching
-  //tightness? maybe, I guess
-  contents?: Contents;
 
-  constructor(depth: number, width: number, elasticity: number, virginity = true, contents?: Contents) {
+  constructor(capacity: Capacity, virginity = true) {
+    this.capacity = capacity;
     this.virginity = virginity;
-    this.depth = depth;
-    this.width = width;
-    this.elasticity = elasticity;
-    this.contents = contents;
   }
 
-  //TODO methods to evaluate fits (for now only penises... down the line probably toys, tails...
+  //TODO methods to evaluate fits
 
 }
 

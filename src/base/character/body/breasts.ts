@@ -1,40 +1,63 @@
-import {Contents, Penetrable} from "./penetrable";
+import {Capacity, Penetrable} from "./penetrable";
+import {Insertable, Size} from "./insertable";
+import {Contents} from "./appearance";
 
 export class Breasts {
 
   cupSize: CupSize;
-  //band and bust size, maybe
+  //band and bust size, for when you really want to be scientific about boobs
+  areolaSize: number;
   nipples: Nipples
+  contents?: Contents; //for lactation
 
   //rating - resolve descriptions based on input sizes?
 
-  constructor(cupSize: CupSize, nipples: Nipples) {
+  constructor(cupSize: CupSize, areolaSize: number, nipples: Nipples, contents?: Contents) {
     this.cupSize = cupSize;
+    this.areolaSize = areolaSize;
     this.nipples = nipples;
+    this.contents = contents;
   }
 
 }
 
 export class Nipples {
 
-  length: number;
-  width: number;
-  //TODO, probably type - normal, penis nipples, fuckable nipples possibly create subclasses?
-  areolaSize: number;
-  contents?: Contents;
-  penetrable?: FuckableNipples;
+  size: Size;
 
-  constructor(length: number, width: number, areolaSize: number, contents = undefined, penetrable = undefined) {
-    this.length = length;
-    this.width = width;
-    this.areolaSize = areolaSize;
-    this.contents = contents;
-    this.penetrable = penetrable;
+  constructor(size: Size) {
+    this.size = size;
   }
 
 }
 
-class FuckableNipples extends Penetrable {
+export class NipplesPenetrable extends Nipples implements Penetrable {
+
+  capacity: Capacity;
+  virginity: boolean;
+
+  //probably some thing eventually, there's only really the "normal" and full on pussynipples
+
+  constructor(size: Size, capacity: Capacity, virginity = true) {
+    super(size);
+    this.capacity = capacity;
+    this.virginity = virginity;
+  }
+
+}
+
+export class NipplesInsertable extends Nipples implements Insertable {
+
+  virginity: boolean;
+
+  //keep in mind the shape of these can be a penis (including balls)
+
+  constructor(size: Size, virginity: boolean) {
+    super(size);
+    this.virginity = virginity;
+  }
+
+  //TODO I wonder if methods from Insertable using size will work here...
 
 }
 

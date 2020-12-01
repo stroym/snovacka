@@ -1,16 +1,26 @@
-import {Size, Virgin} from "./appearance";
-import {Contents, Penetrable} from "./penetrable";
+import {Contents, Virgin} from "./appearance";
+import {Penetrable} from "./penetrable";
 
-abstract class Insertable implements Virgin, Size {
+export class Size {
 
-  virginity: boolean;
   length: number;
   width: number;
 
-  protected constructor(virginity: boolean, length: number, width: number) {
-    this.virginity = virginity;
+  constructor(length: number, width: number) {
     this.length = length;
     this.width = width;
+  }
+
+}
+
+export abstract class Insertable implements Virgin {
+
+  size: Size;
+  virginity: boolean;
+
+  protected constructor(length: number, width: number, virginity: boolean) {
+    this.size = new Size(length, width);
+    this.virginity = virginity;
   }
 
 }
@@ -21,7 +31,7 @@ export class Penis extends Insertable {
   balls?: Balls;
 
   constructor(length: number, width: number, urethra: Urethra, balls?: Balls, virginity = true) {
-    super(virginity, length, width);
+    super(length, width, virginity);
     this.urethra = urethra;
     this.balls = balls;
   }
@@ -47,21 +57,19 @@ export class Urethra extends Penetrable {
 
 }
 
-export class Balls implements Size {
+export class Balls {
 
-  width: number;
-  length: number;
+  size: Size;
   contents?: Contents;
 
-  constructor(width: number, length: number, contents: Contents) {
-    this.width = width;
-    this.length = length;
+  constructor(size: Size, contents?: Contents) {
+    this.size = size;
     this.contents = contents;
   }
 
 }
 
-class Toy extends Insertable {
+class Toy extends Insertable { //kinda iffy with the virginity, but eh
 
 }
 
