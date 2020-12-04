@@ -10,15 +10,47 @@ html, body {
 
 body {
   background-color: lightslategray;
+  /*margin: auto;*/
+  /*display: flex;*/
+  /*justify-content: center;*/
+  /*align-items: center;*/
+  /*flex-direction: column;*/
 }
 
-#text-area {
+#play-area {
+  background-color: darkgray;
   margin: auto;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background-color: darkgray;
   width: 60%;
   height: 100%;
+}
+
+#text-area {
+  padding: 2px 20px 2px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#options-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 10px 0 10px 0;
+}
+
+.option-selector {
+  margin: 1px 0 1px 0;
+  padding: 10px 2px 10px 2px;
+  border: darkgray solid;
+  font-size: 1.1em;
+  text-decoration: underline darkblue;
+  color: darkblue;
+  background-color: coral;
+  cursor: pointer;
 }

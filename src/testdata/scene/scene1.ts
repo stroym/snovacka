@@ -6,7 +6,7 @@ import {CupSize} from "../../base/character/body/breasts";
 export class Scene1 extends Scene {
 
   constructor() {
-    super(1, "prompt 1", [new Scene2()]);
+    super(1, "prompt 1", [new Scene2(), new Scene2(), new Scene2(), new Scene2()]);
   }
 
   render(): string {

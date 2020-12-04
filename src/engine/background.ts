@@ -1,14 +1,19 @@
-import {options} from "./renderer";
+import {optionsContainer} from "./renderer";
+import {OptionSelector} from "./custom/optionSelector";
 
 export function resolveKeypress(e: KeyboardEvent): void {
   //TODO switch between options on up/down +/- press?
 
-  if (options.length > 0 && (e.code.match("Digit[0-9]") || e.code.match("Numpad[0-9]"))) {
+  if (optionsContainer.childElementCount > 0 && (e.code.match("Digit[0-9]+") || e.code.match("Numpad[0-9]+"))) {
     const num = e.code.slice(e.code.length - 1);
 
-    for (const option of options) {
-      if (num == option.textContent?.charAt(0)) {
-        option.click();
+    for (const option of optionsContainer.children) {
+      if (option.textContent != null) {
+        const promptNum = option.textContent.substring(0, option.textContent.indexOf(":"));
+
+        if (num == promptNum) {
+          (option as OptionSelector).click();
+        }
       }
     }
   }

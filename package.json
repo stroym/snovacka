@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "gulp-cli": "^2.3.0",
+    "marked": "^1.2.5",
     "pre-commit": "^1.2.2"
   },
   "devDependencies": {
