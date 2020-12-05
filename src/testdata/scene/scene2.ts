@@ -1,4 +1,7 @@
 import {Scene} from "../../base/scene";
+//TODO using webpack should solve this, hopefully
+// @ts-ignore
+import * as text from "../text/scene2.md";
 
 export class Scene2 extends Scene {
 
@@ -7,25 +10,15 @@ export class Scene2 extends Scene {
   }
 
   render(): string {
-    // if (eliza.name.firstName == "Eliza") {
-    //   eliza.appearance.breasts.cupSize = CupSize.AA;
-    //   return "yes" + eliza.appearance.breasts.cupSize;
-    // } else {
-    //   return "no";
-    // }
-
     let str = "";
 
-    loadFile("../text/scene2.md").then(value => {
-      str = value.toString();
-    });
+    fetch("../text/scene2.md")
+      .then((r) => r.text())
+      .then(text => {
+        console.log(text);
+      });
 
-    return str;
+    return text;
   }
 
-}
-
-async function loadFile(url: string): Promise<string> {
-  const response = await fetch(url);
-  return await response.text();
 }

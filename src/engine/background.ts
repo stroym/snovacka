@@ -1,5 +1,4 @@
-import {optionsContainer} from "./renderer";
-import {OptionSelector} from "./custom/optionSelector";
+import {optionsContainer} from "../index";
 
 export function resolveKeypress(e: KeyboardEvent): void {
   //TODO switch between options on up/down +/- press?
@@ -11,8 +10,9 @@ export function resolveKeypress(e: KeyboardEvent): void {
       if (option.textContent != null) {
         const promptNum = option.textContent.substring(0, option.textContent.indexOf(":"));
 
-        if (num == promptNum) {
-          (option as OptionSelector).click();
+        if (num === promptNum) {
+          // @ts-ignore
+          option.click();
         }
       }
     }
