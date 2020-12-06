@@ -1,9 +1,9 @@
 export abstract class Scene {
 
-  readonly id: number; //or maybe string, could work better
+  readonly id: string;
   readonly prompt: string;
 
-  readonly scenes: Scene[];
+  readonly children: Scene[];
 
   /**
    *
@@ -12,20 +12,17 @@ export abstract class Scene {
    * @param scenes - scenes that can be accessed from this scene
    * @protected
    */
-  protected constructor(id: number, prompt: string, scenes?: Scene[]) {
+  protected constructor(id: string, prompt: string, scenes?: Scene[]) {
     this.id = id;
     this.prompt = prompt;
 
     if (scenes) {
-      this.scenes = scenes;
+      this.children = scenes;
     } else {
-      this.scenes = [];
+      this.children = [];
     }
   }
 
   abstract render(): string;
 
 }
-
-//TODO ideally write to markdown files that then get translated to html (cursive and bold, maybe br) - this part is easy (or I could just export to html, buttfuck that)
-//TODO, maybe: text postprocessor for getting/setting, conditions (probably a huge headache, but could be worth it)

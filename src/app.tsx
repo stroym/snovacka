@@ -1,20 +1,14 @@
 import React from "react";
 import "./app.css";
+import {PlayArea} from "./component/playArea";
 
 function App() {
   return (
     <div className="app">
-
-      <div id="play-area">
-        <div id="text-area">
-        </div>
-
-        <div id="options-container">
-        </div>
-      </div>
-
+      <PlayArea/>
     </div>
   );
+
 }
 
 export default App;
