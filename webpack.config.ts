@@ -1,16 +1,15 @@
+import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin";
+import webpack from "webpack";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import {CleanWebpackPlugin} from "clean-webpack-plugin";
-import * as path from "path";
+import {ForkTsCheckerWebpackPlugin} from "fork-ts-checker-webpack-plugin/lib/ForkTsCheckerWebpackPlugin";
 
 module.exports = {
   mode: "development",
   entry: "./src/index.tsx",
   devServer: {
-    open: true
-  },
-  output: {
-    filename: "bundle.js",
-    path: path.resolve(__dirname, "dist"),
+    open: true,
+    hot: true
   },
   resolve: {
     extensions: [".js", ".ts", ".tsx"],
@@ -18,14 +17,12 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.[jt]s(x?)$/,
         exclude: /node_modules/,
-        use: ["babel-loader"]
-      },
-      {
-        test: /\.ts(x?)$/,
-        exclude: /node_modules/,
-        use: ["babel-loader", "ts-loader"]
+        use: [
+          {loader: "babel-loader", options: {plugins: ["react-refresh/babel"]}},
+          {loader: "ts-loader", options: {transpileOnly: true}}
+        ]
       },
       {
         test: /\.md$/,
@@ -40,7 +37,11 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
+      filename: "./index.html",
       template: "./public/index.html"
-    })
+    }),
+    new webpack.HotModuleReplacementPlugin(),
+    new ReactRefreshWebpackPlugin(),
+    new ForkTsCheckerWebpackPlugin()
   ]
 };

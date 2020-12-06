@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./App";
+import App from "./app";
 import reportWebVitals from "./reportWebVitals";
 import {resolveKeypress} from "./engine/background";
 import {init as initScreenplay} from "./engine/screenplay";
@@ -27,7 +27,6 @@ export const optionsContainer = document.getElementById("options-container")!;
 export const player: Character = new PcAlex();
 export const eliza: NpcEliza = new NpcEliza();
 
-document.title = "Nheyr's Garden";
 document.addEventListener("keypress", resolveKeypress);
 
 initScreenplay();

@@ -25,15 +25,19 @@ html, body, .app {
 
 #text-area {
   width: 100%;
-  padding: 2px 20px 2px 20px;
+  padding: 2px 0 2px 0;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
 
+#text-area p {
+  padding: 2px 10px 2px 10px;
+}
+
 #options-container {
-  width: 100%;
+  width: 90%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -42,7 +46,7 @@ html, body, .app {
 }
 
 .option-selector {
-  width: 90%;
+  width: 100%;
   margin: 1px 0 1px 0;
   padding: 10px 2px 10px 10px;
   border: darkgray solid;
