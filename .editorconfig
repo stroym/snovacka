@@ -17,3 +17,5 @@ ij_continuation_indent_size = 2
 indent_size = 2
 tab_width = 2
 ij_continuation_indent_size = 2
+
+#TODO specify more things other than just indent sizes - yeah, sure, eslint is a thing, but they can both work in tandem with each other

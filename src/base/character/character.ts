@@ -26,6 +26,7 @@ export abstract class Character {
 
 }
 
+//TODO reimplement NPC and PC classes, also make Character and LewdCharacter classes with both PC/NPC variations (so probably interfaces)
 //TODO size etc. transition methods
 
 export enum Archetype {

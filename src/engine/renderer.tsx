@@ -4,16 +4,12 @@ import React from "react";
 import {OptionSelector} from "./custom/options";
 import ReactDOM from "react-dom";
 
-//TODO render functions will have to render containers populated with text, not actual text
-//1 paragraph = 1 container, probably (possible ingame setting: additive/immediate rendering)
-//in additive mode autoscroll to bottom (if applicable)
+//TODO reevaluate if this is a good way to do this now
 export function render(text: string): void {
   textArea.innerHTML = text;
 }
 
-export function renderAdditive(text: string): void {
-  textArea.innerHTML += text;
-}
+//TODO additive scene text rendering with optional autoscroll (might require some scene.render() rethinking
 
 export function populateOptions(scene: Scene): void {
 

@@ -4,6 +4,7 @@ import HtmlWebpackPlugin from "html-webpack-plugin";
 import {CleanWebpackPlugin} from "clean-webpack-plugin";
 import {ForkTsCheckerWebpackPlugin} from "fork-ts-checker-webpack-plugin/lib/ForkTsCheckerWebpackPlugin";
 
+//TODO setup environments
 module.exports = {
   mode: "development",
   entry: "./src/index.tsx",

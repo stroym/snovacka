@@ -15,6 +15,7 @@ import React, {ReactElement} from "react";
 
 export class OptionSelector extends React.Component<React.HTMLProps<HTMLSpanElement>, React.HTMLProps<HTMLAnchorElement>> {
 
+  //TODO highlight on mouseover
   // static propTypes: { onClick: Validator<NonNullable<(...args: any[]) => any>>; content: Validator<NonNullable<string>> };
 
   render() {
