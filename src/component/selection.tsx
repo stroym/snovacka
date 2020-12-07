@@ -1,7 +1,7 @@
 import React from "react";
 import {Scene} from "../base/scene";
 
-export class OptionSelector extends React.Component<OptionProps> {
+export class Selection extends React.Component<OptionProps> {
 
   constructor(props: Readonly<OptionProps> | OptionProps) {
     super(props);
@@ -10,9 +10,9 @@ export class OptionSelector extends React.Component<OptionProps> {
 
   render() {
     return (
-      <span className="option-selector" onClick={() => this.props.updateScene(this.props.scene)}>
-        <span className="snovacka-option-selector-number">{this.props.number}</span>
-        <span className="snovacka-option-selector-prompt">{this.props.scene.prompt}</span>
+      <span className="snovacka-selection" onClick={() => this.props.updateScene(this.props.scene)}>
+        <span className="snovacka-selection-number">{this.props.number}</span>
+        <span className="snovacka-selection-prompt">{this.props.scene.prompt}</span>
       </span>
     );
   }

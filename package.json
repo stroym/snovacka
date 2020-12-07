@@ -80,8 +80,7 @@
         "error",
         2,
         {
-          "SwitchCase": 1,
-          "MemberExpression": "off"
+          "SwitchCase": 1
         }
       ],
       "quotes": [

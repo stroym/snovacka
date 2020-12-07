@@ -1,28 +1,41 @@
-export abstract class Scene {
+export class Scene {
 
   readonly id: string;
   readonly prompt: string;
-
-  readonly children: Scene[];
+  readonly text: () => string;
+  readonly parents: Scene | Scene[];
+  readonly scenes: Scene[];
 
   /**
    *
    * @param id - unique identifier, mainly to make bug reports easier for both parties
    * @param prompt - text for the option that when selected will lead to this scene
-   * @param scenes - scenes that can be accessed from this scene
+   * @param parents - scenes that can access this scene
+   * @param text - optional custom function resolving text that'll get rendered
    * @protected
    */
-  protected constructor(id: string, prompt: string, scenes?: Scene[]) {
+  constructor(id: string, prompt: string, parents: Scene | Scene[], text: () => string) {
     this.id = id;
     this.prompt = prompt;
+    this.text = text;
+    this.scenes = [];
+    this.parents = parents;
 
-    if (scenes) {
-      this.children = scenes;
+    if (Array.isArray(parents)) {
+      for (const parent of parents) {
+        parent.addScene(this);
+      }
     } else {
-      this.children = [];
+      parents.addScene(this);
     }
   }
 
-  abstract render(): string;
+  addScene(scene: Scene) {
+    this.scenes.push(scene);
+  }
+
+  addScenes(scenes: Scene[]) {
+    this.scenes.concat(scenes);
+  }
 
 }

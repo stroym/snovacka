@@ -1,12 +1,12 @@
-import React, {HTMLProps} from "react";
-import {SceneComponent} from "./sceneComponent";
+import React from "react";
+import {Screenplay} from "./screenplay";
 
-export class PlayArea extends React.Component<HTMLProps<HTMLDivElement>> {
+export class PlayArea extends React.Component {
 
   render() {
     return (
-      <div id="play-area">
-        <SceneComponent/>
+      <div id="snovacka-play-container">
+        <Screenplay/>
       </div>
     );
   }

@@ -3,64 +3,111 @@
   padding: 0;
 }
 
-html, body, .app {
+html, body, #root {
   height: 100vh;
   width: 100vw;
 }
 
-.app {
-  background-color: lightslategray;
-}
-
-#play-area {
+#snovacka-app {
+  width: 100%;
+  height: 100%;
   background-color: darkgray;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  box-sizing: border-box;
+  padding: 10px;
+}
+
+#snovacka-play-container {
   margin: auto;
-  width: 60%;
-  height: 100%;
-}
-
-.snovacka-scene {
-  width: 100%;
+  width: 80%;
   height: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  flex-direction: row;
+  box-sizing: border-box;
 }
 
-#text-area {
+.snovacka-screenplay {
   width: 100%;
-  padding: 2px 0 2px 0;
-  display: flex;
-  justify-content: center;
+  height: 100%;
+  font-size: 20px;
   align-items: center;
-  flex-direction: column;
-}
-
-#text-area p {
-  padding: 2px 10px 2px 10px;
-}
-
-#options-container {
-  width: 90%;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
   flex-direction: column;
-  margin: 10px 0 10px 0;
+  box-sizing: border-box;
 }
 
-.option-selector {
+#snovacka-text-area {
   width: 100%;
-  margin: 1px 0 1px 0;
-  padding: 10px 2px 10px 10px;
-  border: darkgray solid;
-  font-size: 1.1em;
-  color: darkblue;
+  height: 75%;
+  max-height: 100%;
+  font-size: 1.5em;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  overflow: auto;
+  border: black solid 4px;
+  font-family: serif;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+#snovacka-text-area p {
+  padding: 10px 5px;
+  line-height: 1em;
+}
+
+#snovacka-selection-container {
+  width: 100%;
+  margin-top: 10px;
+  padding: 5px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  flex-grow: 1;
+  border: black solid 4px;
+  box-sizing: border-box;
+}
+
+.snovacka-selection {
+  width: 100%;
+  margin: 2px 0;
+  border: beige solid 2px;
+  border-radius: 2px;
+  color: black;
   background-color: coral;
   cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
 }
 
-.option-selector:hover {
+.snovacka-selection:hover {
   background-color: chocolate;
+}
+
+.snovacka-selection * {
+  text-align: center;
+  padding: 5px;
+  font-size: 1.4em;
+}
+
+.snovacka-selection-number {
+  width: 5%;
+  border-right: beige solid 2px;
+}
+
+.snovacka-selection-prompt {
+}
+
+#snovacka-sidebar {
+  width: 20%;
+  height: 100%;
+  margin-right: 2px;
+  border: red solid 4px;
+  box-sizing: border-box;
 }
