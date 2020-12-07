@@ -25,6 +25,8 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.53",
     "@types/react-dom": "^16.9.8",
+    "@types/react-router": "^5.1.8",
+    "@types/react-scroll": "^1.8.2",
     "@typescript-eslint/eslint-plugin": "^4.8.2",
     "@typescript-eslint/parser": "^4.8.2",
     "babel-loader": "^8.2.2",
@@ -41,6 +43,7 @@
     "react-dom": "^17.0.1",
     "react-markdown": "^5.0.3",
     "react-refresh": "^0.9.0",
+    "react-router": "^5.2.0",
     "react-scripts": "4.0.1",
     "style-loader": "^2.0.0",
     "ts-loader": "^8.0.11",
@@ -111,5 +114,8 @@
       "@babel/preset-react",
       "@babel/preset-typescript"
     ]
+  },
+  "dependencies": {
+    "react-scroll": "^1.8.1"
   }
 }

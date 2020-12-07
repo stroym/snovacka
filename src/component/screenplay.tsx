@@ -1,13 +1,13 @@
 import React from "react";
 import {SelectionsContainer} from "./selectionsContainer";
-import {TextArea} from "./textArea";
 import {Scene} from "../base/scene";
 import {intro} from "../engine/scenes";
+import TextArea from "./textArea";
 
 export class Screenplay extends React.Component<{}, ChildContentProps> {
 
-  constructor() {
-    super({});
+  constructor(props = {}) {
+    super(props);
 
     this.state = {
       scene: intro
