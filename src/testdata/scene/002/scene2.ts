@@ -1,5 +1,5 @@
 import {Scene} from "../../../base/scene";
-import * as text from "./scene2.md";
+import text from "./scene2.md";
 
 export class Scene2 extends Scene {
 

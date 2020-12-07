@@ -1,11 +1,7 @@
-import React, {HTMLProps} from "react";
-import PropTypes from "prop-types";
+import React from "react";
+import ReactMarkdown from "react-markdown";
 
-export class TextArea extends React.Component<TextAreaProps & HTMLProps<HTMLDivElement>, TextAreaProps> {
-
-  static props = {
-    content: PropTypes.string
-  }
+export class TextArea extends React.Component<TextAreaProps> {
 
   constructor(props: Readonly<TextAreaProps> | TextAreaProps) {
     super(props);
@@ -22,11 +18,15 @@ export class TextArea extends React.Component<TextAreaProps & HTMLProps<HTMLDivE
   }
 
   render() {
-    return <div id="text-area">{this.props.content}</div>;
+    return (
+      <div id="text-area">
+        <ReactMarkdown source={this.props.content}/>
+      </div>
+    );
   }
 
 }
 
 type TextAreaProps = {
-  content?: string
+  content: string
 }

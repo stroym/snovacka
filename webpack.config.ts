@@ -14,6 +14,7 @@ module.exports = {
   },
   resolve: {
     extensions: [".js", ".ts", ".tsx"],
+    fallback: {"path": false}
   },
   module: {
     rules: [
@@ -27,7 +28,7 @@ module.exports = {
       },
       {
         test: /\.md$/,
-        use: ["html-loader", "markdown-loader"]
+        use: "raw-loader"
       },
       {
         test: /\.css$/i,
@@ -43,6 +44,9 @@ module.exports = {
     }),
     new webpack.HotModuleReplacementPlugin(),
     new ReactRefreshWebpackPlugin(),
-    new ForkTsCheckerWebpackPlugin()
+    new ForkTsCheckerWebpackPlugin(),
+    new webpack.ProvidePlugin({
+      process: "process/browser",
+    }),
   ]
 };
