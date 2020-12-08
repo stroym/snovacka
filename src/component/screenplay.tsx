@@ -1,10 +1,10 @@
 import React from "react";
-import {SelectionsContainer} from "./selectionsContainer";
+import SelectionsContainer from "./selectionsContainer";
 import {Scene} from "../base/scene";
 import {intro} from "../engine/scenes";
 import TextArea from "./textArea";
 
-export class Screenplay extends React.Component<{}, ChildContentProps> {
+export default class Screenplay extends React.Component<{}, ChildContentProps> {
 
   constructor(props = {}) {
     super(props);

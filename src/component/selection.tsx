@@ -1,7 +1,7 @@
 import React from "react";
 import {Scene} from "../base/scene";
 
-export class Selection extends React.Component<OptionProps> {
+export default class Selection extends React.Component<OptionProps> {
 
   constructor(props: Readonly<OptionProps> | OptionProps) {
     super(props);

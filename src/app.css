@@ -52,7 +52,6 @@ html, body, #root {
   border: black solid 4px;
   font-family: serif;
   box-sizing: border-box;
-  scroll-behavior: smooth;
 }
 
 #snovacka-text-area p {

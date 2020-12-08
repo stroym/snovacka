@@ -1,7 +1,7 @@
 import React from "react";
 import "./app.css";
-import {PlayArea} from "./component/playArea";
-import {SideBar} from "./component/sideBar";
+import PlayArea from "./component/playArea";
+import SideBar from "./component/sideBar";
 
 function App() {
   return (
