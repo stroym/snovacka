@@ -1,10 +1,6 @@
-import {Scene} from "../base/scene";
-import text1 from "../testdata/scene/scene1.md";
-import text2 from "../testdata/scene/scene2.md";
-
-export let intro = new Scene("intro-scene", "", [], () => {
-  return "welcome to hell";
-});
+import Scene, {intro} from "../../engine/base/scene";
+import text1 from "./scene1.md";
+import text2 from "./scene2.md";
 
 export let scene1 = new Scene("scene1", "prompt 1", intro, () => {
   return text1;

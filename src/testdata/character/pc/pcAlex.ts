@@ -1,10 +1,10 @@
-import {Name} from "../../../base/character/name";
-import {Appearance, General} from "../../../base/character/body/appearance";
-import {Anus, Capacity, Mouth} from "../../../base/character/body/penetrable";
-import {Penis, Size, Urethra} from "../../../base/character/body/insertable";
-import {Breasts, CupSize, Nipples} from "../../../base/character/body/breasts";
-import {Archetype, Character} from "../../../base/character/character";
-import {Attributes} from "../../../base/character/attributes";
+import {Name} from "../../../engine/base/character/name";
+import {Appearance, General} from "../../../engine/base/character/body/appearance";
+import {Anus, Capacity, Mouth} from "../../../engine/base/character/body/penetrable";
+import {Penis, Size, Urethra} from "../../../engine/base/character/body/insertable";
+import {Breasts, CupSize, Nipples} from "../../../engine/base/character/body/breasts";
+import {Archetype, Character} from "../../../engine/base/character/character";
+import {Attributes} from "../../../engine/base/character/attributes";
 
 export class PcAlex extends Character {
 

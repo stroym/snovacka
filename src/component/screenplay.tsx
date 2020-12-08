@@ -1,8 +1,7 @@
 import React from "react";
 import SelectionsContainer from "./selectionsContainer";
-import {Scene} from "../base/scene";
-import {intro} from "../engine/scenes";
-import TextArea from "./textArea";
+import Scene, {intro} from "../engine/base/scene";
+import TextView from "./textView";
 
 export default class Screenplay extends React.Component<{}, ChildContentProps> {
 
@@ -19,8 +18,8 @@ export default class Screenplay extends React.Component<{}, ChildContentProps> {
   render() {
     return (
       <div className="snovacka-screenplay">
-        <TextArea content={this.state.scene.text()}/>
-        <SelectionsContainer scenes={this.state.scene.scenes} updateScene={this.updateScene}/>
+        <TextView content={this.state.scene.text()}/>
+        <SelectionsContainer scenes={this.state.scene.children} updateScene={this.updateScene}/>
       </div>
     );
   }

@@ -1,11 +1,11 @@
 import React from "react";
 import Screenplay from "./screenplay";
 
-export default class PlayArea extends React.Component {
+export default class GameContainer extends React.Component {
 
   render() {
     return (
-      <div id="snovacka-play-container">
+      <div id="snovacka-game-container">
         <Screenplay/>
       </div>
     );

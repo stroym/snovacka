@@ -1,7 +1,7 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
 
-export default class TextArea extends React.Component<TextAreaProps> {
+export default class TextView extends React.Component<TextAreaProps> {
 
   private readonly selfRef: React.RefObject<HTMLDivElement>;
 
