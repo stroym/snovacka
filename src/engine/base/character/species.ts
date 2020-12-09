@@ -1,4 +1,4 @@
-export class Species {
+export default class Species {
 
   private name = "";
 

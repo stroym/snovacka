@@ -1,6 +1,6 @@
-import React from "react";
+import React     from "react";
 import Selection from "./selection";
-import {Scene} from "../engine/base/scene";
+import Scene     from "../engine/base/scene";
 
 export default class SelectionsContainer extends React.Component<ContainerProps> {
 

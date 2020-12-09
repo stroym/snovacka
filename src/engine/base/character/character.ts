@@ -1,33 +1,53 @@
-import {Name} from "./name";
-import {Appearance} from "./body/appearance";
-import {Attributes} from "./attributes";
-import {Descriptions} from "./descriptions";
+import Attributes from "./attributes";
+import Appearance from "./appearance/appearance";
+import Personal   from "./personal";
 
-export abstract class Character {
+abstract class Character<A extends Appearance> {
+
+  //initial state to track changes just for fun?
 
   name: Name;
-  //_species: Species,
-  archetype: Archetype;
-  appearance: Appearance;
-  //personality = likes/dislikes/sexual preferences etc.
-  //age, height, weight etc should probably be in its own small general thing
-  attributes: Attributes  //for now a class is much easier to work with, but down the line this'll probably need to be an array,
+  personal: Personal;
+  appearance: A;
+  attributes: Attributes;  //for now a class is much easier to work with, but down the line this'll probably need to
+  // be an array,
   // especially if there's GUI generation - unless I can figure out how to make that work with a class
   // we'll see what happens once this thing actually does something
-  descriptions: Descriptions;
 
-  protected constructor(name: Name, archetype: Archetype, appearance: Appearance, attributes: Attributes) {
+  constructor(name: Name, personal: Personal, appearance: A, attributes: Attributes) {
     this.name = name;
-    this.archetype = archetype;
+    this.personal = personal;
     this.appearance = appearance;
     this.attributes = attributes;
-    this.descriptions = Descriptions.pickPronouns(archetype);
   }
 
 }
 
-//TODO reimplement NPC and PC classes, also make Character and LewdCharacter classes with both PC/NPC variations (so probably interfaces)
-//TODO size etc. transition methods
+export class NonPlayableCharacter<A extends Appearance> extends Character<A> {
+
+  //TODO further split down to dateable and just background?
+
+}
+
+export class PlayableCharacter<A extends Appearance> extends Character<A> {
+
+  //location, current scene/progress etc?
+
+}
+
+export class Name {
+
+  readonly firstName: string;
+  readonly lastName?: string;
+  readonly nickName?: string;
+
+  constructor(firstName: string, lastName?: string, nickName?: string) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.nickName = nickName;
+  }
+
+}
 
 export enum Archetype {
 
@@ -37,5 +57,43 @@ export enum Archetype {
   FEMALE,
   DICKGIRL,
   FUTA
+
+}
+
+export class Descriptions {
+
+  private static masculine = new Descriptions("he", "him", "his");
+  private static feminine = new Descriptions("she", "her", "hers");
+
+  readonly subjective: string;
+  readonly objective: string;
+  readonly possessive: string;
+
+  constructor(subjective: string, objective: string, possessive: string) {
+    this.subjective = subjective;
+    this.objective = objective;
+    this.possessive = possessive;
+  }
+
+  static pickPronouns(archetype: Archetype): Descriptions {
+    switch (archetype) {
+      case Archetype.MALE:
+      case Archetype.CUNTBOY:
+        return Descriptions.masculine;
+      case Archetype.FEMALE:
+      case Archetype.FUTA:
+      case Archetype.DICKGIRL:
+        return Descriptions.feminine;
+      default:
+        throw new Error("Invalid Character.Archetype value!"); //this should absolutely never happen
+    }
+  }
+
+}
+
+//TODO should be useful to fetch and/or splice together descriptions of... pretty much anything
+export interface Describeable {
+
+  description(): string
 
 }

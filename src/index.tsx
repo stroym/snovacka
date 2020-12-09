@@ -1,13 +1,7 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import App from "./app";
+import React           from "react";
+import ReactDOM        from "react-dom";
+import App             from "./app";
 import reportWebVitals from "./reportWebVitals";
-import {Character} from "./engine/base/character/character";
-import {PcAlex} from "./testdata/character/pc/pcAlex";
-import {NpcEliza} from "./testdata/character/npc/npcEliza";
-
-export const player: Character = new PcAlex();
-export const eliza: NpcEliza = new NpcEliza();
 
 ReactDOM.render(
   <React.StrictMode>

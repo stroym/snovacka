@@ -1,6 +1,5 @@
-import {Capacity, Penetrable} from "./penetrable";
-import {Insertable, Size} from "./insertable";
-import {Contents} from "./appearance";
+import {Capacity, Contents, Penetrable} from "./penetrable";
+import {Insertable, Size}               from "./insertable";
 
 export class Breasts {
 
@@ -24,36 +23,46 @@ export class Breasts {
 export class Nipples {
 
   size: Size;
+  private special: NipplesPenetrable | NipplesInsertable;
 
   constructor(size: Size) {
     this.size = size;
+    this.special = new NipplesPenetrable(new Capacity(0, 0, 0, 0));
+  }
+
+  penetrable(): NipplesPenetrable {
+    return this.special as NipplesPenetrable;
+  }
+
+  insertable(): NipplesInsertable {
+    return this.special as NipplesInsertable;
   }
 
 }
 
-export class NipplesPenetrable extends Nipples implements Penetrable {
+export class NipplesPenetrable implements Penetrable {
 
   capacity: Capacity;
   virginity: boolean;
 
   //probably some thing eventually, there's only really the "normal" and full on pussynipples
 
-  constructor(size: Size, capacity: Capacity, virginity = true) {
-    super(size);
+  constructor(capacity: Capacity, virginity = true) {
     this.capacity = capacity;
     this.virginity = virginity;
   }
 
 }
 
-export class NipplesInsertable extends Nipples implements Insertable {
+export class NipplesInsertable implements Insertable {
 
+  size: Size;
   virginity: boolean;
 
   //keep in mind the shape of these can be a penis (including balls)
 
   constructor(size: Size, virginity: boolean) {
-    super(size);
+    this.size = size;
     this.virginity = virginity;
   }
 

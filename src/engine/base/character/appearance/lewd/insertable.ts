@@ -1,5 +1,4 @@
-import {Contents, Virgin} from "./appearance";
-import {Penetrable} from "./penetrable";
+import {Contents, Penetrable, Virgin} from "./penetrable";
 
 export class Size {
 

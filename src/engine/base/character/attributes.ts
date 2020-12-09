@@ -1,4 +1,4 @@
-export class Attributes {
+export default class Attributes {
 
 }
 
