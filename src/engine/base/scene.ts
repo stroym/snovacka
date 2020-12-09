@@ -12,7 +12,6 @@ export default class Scene {
    * @param prompt - text for the option that when selected will lead to this scene
    * @param parents - scenes that can access this scene
    * @param text - text to be rendered/custom function resolving text that'll get rendered
-   *
    */
   constructor(id: string, prompt: string, parents: Scene | Scene[], text: string | (() => string)) {
     this.id = id;
