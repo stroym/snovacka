@@ -6,7 +6,7 @@ export class Breasts {
   cupSize: CupSize;
   //band and bust size, for when you really want to be scientific about boobs
   areolaSize: number;
-  nipples: Nipples
+  nipples: Nipples;
   contents?: Contents; //for lactation
 
   //rating - resolve descriptions based on input sizes?

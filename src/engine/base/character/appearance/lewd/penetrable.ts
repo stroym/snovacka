@@ -29,8 +29,10 @@ export class Capacity {
 
   depth: number;
   width: number;
-  elasticity: number;   // - some threshold for determining when stretching has long-term effect is likely necessary; might wanna make a class for that
-  recovery: number;     //how well an orifice can recover from stretching (ergo how much - if at all - will base capacity increase after stretching
+  elasticity: number;   // - some threshold for determining when stretching has long-term effect is likely necessary;
+  // might wanna make a class for that
+  recovery: number;     //how well an orifice can recover from stretching (ergo how much - if at all - will base
+  // capacity increase after stretching
   //tightness? maybe, I guess = calculated value, probably
   contents?: Contents;
 
@@ -45,7 +47,7 @@ export class Capacity {
 
 export abstract class Penetrable implements Virgin {
 
-  capacity: Capacity
+  capacity: Capacity;
   virginity: boolean;
 
   constructor(capacity: Capacity, virginity = true) {

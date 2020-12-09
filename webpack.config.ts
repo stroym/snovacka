@@ -1,7 +1,7 @@
-import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin";
-import webpack from "webpack";
-import HtmlWebpackPlugin from "html-webpack-plugin";
-import {CleanWebpackPlugin} from "clean-webpack-plugin";
+import ReactRefreshWebpackPlugin    from "@pmmmwh/react-refresh-webpack-plugin";
+import webpack                      from "webpack";
+import HtmlWebpackPlugin            from "html-webpack-plugin";
+import {CleanWebpackPlugin}         from "clean-webpack-plugin";
 import {ForkTsCheckerWebpackPlugin} from "fork-ts-checker-webpack-plugin/lib/ForkTsCheckerWebpackPlugin";
 
 //TODO setup environments
@@ -32,7 +32,7 @@ module.exports = {
       },
       {
         test: /\.css$/i,
-        use: ["style-loader", "css-loader"],
+        use: ["style-loader", "css-loader"]
       }
     ]
   },
@@ -46,7 +46,7 @@ module.exports = {
     new ReactRefreshWebpackPlugin(),
     new ForkTsCheckerWebpackPlugin(),
     new webpack.ProvidePlugin({
-      process: "process/browser",
-    }),
+      process: "process/browser"
+    })
   ]
 };

@@ -29,7 +29,8 @@ export class AppearanceLewd extends Appearance {
   }
 
   //TODO something, something, butt enum probably (buttjob and other checks, I guess), merge with anus?
-  //TODO transformations (just sex organs now, species... probably not ever, but we'll see just how far the lewd part variables will go)
+  //TODO transformations (just sex organs now, species... probably not ever, but we'll see just how far the lewd part
+  // variables will go)
 
   // public static makeMale(breasts: Breasts, mouth: Mouth, anus: Anus, penis: Penis) {
   //   return new AppearanceLewd(breasts, mouth, anus, undefined, penis);

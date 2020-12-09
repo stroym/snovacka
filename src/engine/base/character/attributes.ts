@@ -24,4 +24,5 @@ export class Threshold {
 
 }
 
-// //for example penis rating would consists of length and width (girth) rating... which I could reuse for all insertables and orifices
+// for example penis rating would consists of length and width (girth) rating... which I could reuse for all
+// insertables and orifices

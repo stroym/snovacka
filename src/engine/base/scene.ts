@@ -19,9 +19,9 @@ export default class Scene {
     this.text = typeof text === "string" ? () => text : text;
 
     if (Array.isArray(parents)) {
-      for (const parent of parents) {
+      parents.forEach(parent => {
         parent.addScene(this);
-      }
+      });
     } else {
       parents.addScene(this);
     }

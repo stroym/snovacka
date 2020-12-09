@@ -3,7 +3,8 @@ import text1 from "./scene1.md";
 import text2 from "./scene2.md";
 
 /**
- * This scene is mandatory and as far as I know its usage cannot be avoided, as it's being passed as the first scene to be rendered.
+ * This scene is mandatory and as far as I know its usage cannot be avoided, as it's being passed as the first scene to
+ * be rendered.
  */
 export let intro = new Scene("snovacka-intro-scene", "", [], () => {
   return "welcome to hell";

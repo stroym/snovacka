@@ -6,7 +6,8 @@ import {AppearanceLewd}                        from "../../base/character/appear
 import {Breasts, CupSize, Nipples}             from "../../base/character/appearance/lewd/breasts";
 import {Archetype, Name, NonPlayableCharacter} from "../../base/character/character";
 
-//TODO we'll see if there's a case in which a character would need some custom iplementations, extending would probably be the way to go then
+//TODO we'll see if there's a case in which a character would need some custom implementations, extending would
+// probably be the way to go then
 export let eliza = new NonPlayableCharacter<AppearanceLewd>(
   new Name("Eliza"),
   new Personal(Archetype.FUTA, 34, 192, 77),

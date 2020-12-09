@@ -99,7 +99,10 @@
           "maxEOF": 1
         }
       ],
-      "no-empty-function": "warn"
+      "one-var": [
+        "error",
+        "never"
+      ]
     }
   },
   "pre-commit": [
