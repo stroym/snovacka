@@ -11,12 +11,12 @@ export default class Scene {
    * @param id - unique identifier, mainly to make bug reports easier for both parties
    * @param prompt - text for the option that when selected will lead to this scene
    * @param parents - scenes that can access this scene
-   * @param text - text to be rendered/custom function resolving text that'll get rendered
+   * @param text - text to be rendered
    */
-  constructor(id: string, prompt: string, parents: Scene | Scene[], text: string | (() => string)) {
+  constructor(id: string, prompt: string, text: string, parents: Scene | Scene[]) {
     this.id = id;
     this.prompt = prompt;
-    this.text = typeof text === "string" ? () => text : text;
+    this.text = () => text;
 
     if (Array.isArray(parents)) {
       parents.forEach(parent => {

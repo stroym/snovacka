@@ -6,7 +6,9 @@ ${eliza.name.fullName}
 
 ${eliza.name.firstName}
 
+if(${eliza.appearance.breasts.cupSize}>4){
 Etiam fringilla mauris quis ligula sollicitudin, et euismod sapien tincidunt. Ut sit amet maximus orci. Ut ut velit eu sem hendrerit luctus. Quisque mattis metus ultrices lorem ullamcorper maximus. Mauris quis dignissim diam, ut auctor nibh. Donec tempor, nibh nec convallis sagittis, magna libero rutrum felis, non aliquet enim nisl non orci. Duis nibh erat, rutrum suscipit commodo ut, scelerisque ac sem.
+}
 
 Nam vestibulum consequat hendrerit. Suspendisse ultricies rutrum rutrum. Mauris mattis molestie urna, pulvinar maximus libero porttitor interdum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec ultricies hendrerit urna, a dapibus nisi pretium et. Quisque ac ullamcorper metus. Vestibulum metus dui, imperdiet vitae mi in, varius interdum leo. Morbi vitae magna a sapien luctus fermentum in id ligula. Etiam eget elit blandit, cursus nunc condimentum, pulvinar lacus. Sed rutrum et felis in consectetur. Curabitur imperdiet nec diam sit amet placerat. Nam blandit libero ex, eu feugiat nibh mollis vitae. In leo elit, sagittis eu suscipit nec, porta non felis. Fusce ac auctor augue.
 

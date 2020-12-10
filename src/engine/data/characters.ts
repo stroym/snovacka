@@ -1,10 +1,10 @@
-import Attributes from "../../base/character/attributes";
-import Personal from "../../base/character/personal";
-import {Penis, Size, Urethra} from "../../base/character/appearance/lewd/insertable";
-import {Anus, Capacity, Mouth, Vagina} from "../../base/character/appearance/lewd/penetrable";
-import Appearance, {AppearanceLewd} from "../../base/character/appearance/appearance";
-import {Breasts, CupSize, Nipples} from "../../base/character/appearance/lewd/breasts";
-import {Archetype, Name, NonPlayableCharacter} from "../../base/character/character";
+import Attributes from "../base/character/attributes";
+import Personal from "../base/character/personal";
+import {Penis, Size, Urethra} from "../base/character/appearance/lewd/insertable";
+import {Anus, Capacity, Mouth, Vagina} from "../base/character/appearance/lewd/penetrable";
+import Appearance, {AppearanceLewd} from "../base/character/appearance/appearance";
+import {Breasts, CupSize, Nipples} from "../base/character/appearance/lewd/breasts";
+import {Archetype, Name, NonPlayableCharacter} from "../base/character/character";
 
 //TODO we'll see if there's a case in which a character would need some custom implementations, extending would
 // probably be the way to go then
@@ -21,7 +21,6 @@ export let eliza = new NonPlayableCharacter<AppearanceLewd>(
   new Attributes()
 );
 
-//TODO character holder class?
 export let characters = new Map<string, NonPlayableCharacter<Appearance>>([
   ["eliza", eliza]
 ]);

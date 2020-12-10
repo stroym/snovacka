@@ -2,7 +2,7 @@ import React from "react";
 import SelectionsContainer from "./selectionsContainer";
 import Scene from "../engine/base/scene";
 import TextView from "./textView";
-import {intro} from "../engine/data/scene/scenes";
+import {intro} from "../engine/data/scenes";
 
 export default class Screenplay extends React.Component<{}, ChildContentProps> {
 
