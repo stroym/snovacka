@@ -2,11 +2,12 @@ import {Archetype, Descriptions} from "./character";
 
 export default class Personal {
 
+  //TODO probably? add some helpers around gender things (manual descriptions, gender in addition to archetype)
   archetype: Archetype;
   age: number;
   height: number;
   weight: number;
-  //_species: Species,
+  //species: Species,
   //personality = likes/dislikes/sexual preferences etc.
   descriptions: Descriptions;
 
@@ -15,7 +16,7 @@ export default class Personal {
     this.age = age;
     this.height = height;
     this.weight = weight;
-    this.descriptions = Descriptions.pickPronouns(archetype);
+    this.descriptions = Descriptions.pick(archetype);
   }
 
 }

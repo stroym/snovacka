@@ -17,13 +17,31 @@ enum Comparison {
 
 class Conditional {
 
-  conditions: Condition[];
+  conditions: Condition[] = new Array<Condition>();
 
   constructor(str: string) {
-    this.conditions = [];
+
+  }
+
+  resolve(): string {
+    for (let condition of this.conditions) {
+      if (condition.compare()) {
+        return condition.resolve();
+      }
+
+    }
+    return "";
+  }
+
+  private split(str: string) {
+    // if () {}
+    // else if() {}
+    // else {}
   }
 
 }
+
+//TODO complex conditions (&&, ||, () priority) & negation?
 
 class Condition {
 
@@ -90,6 +108,8 @@ class Condition {
 
 }
 
+//TODO it would probably be nice to implement some shorthands (ergo getters on the character class) for some things that
+// are likely to be used often (so far only heshe etc. comes to mind)
 function resolveConditionals(text: string): string {
   let blocks = text.match(/(if\(.*\)\s*{\s*.*\s*})/g);
 

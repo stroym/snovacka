@@ -55,7 +55,7 @@ export class Name {
 
 export enum Archetype {
 
-  //GENDERLESS
+  //GENDERLESS + descriptions ofc.
   MALE,
   CUNTBOY,
   FEMALE,
@@ -79,7 +79,7 @@ export class Descriptions {
     this.possessive = possessive;
   }
 
-  static pickPronouns(archetype: Archetype): Descriptions {
+  static pick(archetype: Archetype): Descriptions {
     switch (archetype) {
       case Archetype.MALE:
       case Archetype.CUNTBOY:
@@ -96,8 +96,28 @@ export class Descriptions {
 }
 
 //TODO should be useful to fetch and/or splice together descriptions of... pretty much anything
-export interface Describeable {
+export interface Describable {
 
-  description(): string
+  readonly description: string;     //a wall of text
 
 }
+
+export interface DescribableSingular {
+
+  readonly singular: string;        //human
+
+  readonly subjectiveS: string;      //human/humans      | I
+  readonly objectiveS: string;       //human/humans      | me
+  readonly possessiveS: string;      //human's/humans'   | mine
+
+}
+
+export interface DescribablePlural {
+
+  readonly plural: string;          //humans
+
+  readonly subjectiveP: string;      //human/humans      | I
+  readonly objectiveP: string;       //human/humans      | me
+  readonly possessiveP: string;      //human's/humans'   | mine
+}
+
