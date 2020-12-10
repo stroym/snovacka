@@ -1,6 +1,6 @@
-import {Breasts}             from "./lewd/breasts";
+import {Breasts} from "./lewd/breasts";
 import {Anus, Mouth, Vagina} from "./lewd/penetrable";
-import {Penis}               from "./lewd/insertable";
+import {Penis} from "./lewd/insertable";
 
 export default class Appearance {
 

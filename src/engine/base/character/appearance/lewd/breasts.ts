@@ -1,5 +1,5 @@
 import {Capacity, Contents, Penetrable} from "./penetrable";
-import {Insertable, Size}               from "./insertable";
+import {Insertable, Size} from "./insertable";
 
 export class Breasts {
 

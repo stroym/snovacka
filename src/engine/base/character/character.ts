@@ -1,6 +1,6 @@
 import Attributes from "./attributes";
 import Appearance from "./appearance/appearance";
-import Personal   from "./personal";
+import Personal from "./personal";
 
 abstract class Character<A extends Appearance> {
 

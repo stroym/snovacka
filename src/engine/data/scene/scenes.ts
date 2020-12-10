@@ -1,7 +1,7 @@
-import Scene         from "../../base/scene";
-import text1         from "./scene1.md";
-import text2         from "./scene2.md";
-import {eliza}       from "../character/characters";
+import Scene from "../../base/scene";
+import text1 from "./scene1.md";
+import text2 from "./scene2.md";
+import {eliza} from "../character/characters";
 import {postProcess} from "../../parser";
 
 /**

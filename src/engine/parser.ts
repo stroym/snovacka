@@ -1,4 +1,3 @@
-/* eslint-disable no-eval */
 import characters from "./data/character/characters";
 
 export function getResources(path: string) {
@@ -10,20 +9,27 @@ export function postProcess(text: string): string {
 
   console.log(matches);
 
-  if (matches) {
-    for (let match of matches) {
-      let charString = match.substring(2, match.indexOf("."));
-      let propString = match.substring(match.indexOf(".") + 1, match.length - 1);
+  for (let match of matches) {
+    let parts = match.substring(2, match.length - 1).split(".");
+    let character = characters.get(parts.shift() as string);
 
-      let character = characters.get(charString);
-
-      console.log(character);
-      let evaluation = eval("`${character." + propString + "}`");
-
-      text = text.replaceAll(match, evaluation);
-      console.log(evaluation);
+    if (character) {
+      text = text.replaceAll(match, resolveProperty(character, parts));
+    } else {
+      //TODO more concrete error messages
+      throw new Error("Character \"" + character + "\" not found in the characters array!");
     }
   }
 
   return text;
+}
+
+function resolveProperty(object: any, properties: string[]): string {
+  let value = object;
+
+  while (properties.length) {
+    value = value[properties.shift()!];
+  }
+
+  return value;
 }
