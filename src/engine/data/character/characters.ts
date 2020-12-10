@@ -9,7 +9,7 @@ import {Archetype, Name, NonPlayableCharacter} from "../../base/character/charac
 //TODO we'll see if there's a case in which a character would need some custom implementations, extending would
 // probably be the way to go then
 export let eliza = new NonPlayableCharacter<AppearanceLewd>(
-  new Name("Eliza"),
+  new Name("Eliza", "???"),
   new Personal(Archetype.FUTA, 34, 192, 77),
   new AppearanceLewd(
     new Breasts(CupSize.D, 3, new Nipples(new Size(0, 0))),
@@ -20,3 +20,9 @@ export let eliza = new NonPlayableCharacter<AppearanceLewd>(
   ),
   new Attributes()
 );
+
+export let characters = new Map<string, NonPlayableCharacter<any>>([
+  ["eliza", eliza]
+]);
+
+export default characters;

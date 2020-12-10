@@ -47,6 +47,10 @@ export class Name {
     this.nickName = nickName;
   }
 
+  get fullName(): string {
+    return this.firstName + " " + this.lastName;
+  }
+
 }
 
 export enum Archetype {
