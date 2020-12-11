@@ -51,11 +51,22 @@ export class SetterPlaceholder extends Placeholder {
   }
 
   update(map: Map<string, any>, text: string): string {
-    this.resolve(map)[this.lastProp] = this.value;
+    this.resolve(map)[this.lastProp] = this.checkedValue();
 
     return text.replaceAll(this.raw, "");
   }
 
+  private checkedValue(): boolean | number | string {
+    let val = this.value.toLowerCase();
+
+    if (Number(val)) {
+      return Number(val);
+    } else if (val === "true" || val === "false") {
+      return (/true/i).test(val);
+    } else {
+      return val;
+    }
+  }
 }
 
 export function getGetterPlaceholders(text: string, regex: RegExp): Array<GetterPlaceholder> {
