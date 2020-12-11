@@ -19,11 +19,10 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.[jt]s(x?)$/,
+        test: /\.ts(x?)$/,
         exclude: /node_modules/,
         use: [
-          {loader: "babel-loader", options: {plugins: ["react-refresh/babel"]}},
-          {loader: "ts-loader", options: {transpileOnly: true}}
+          {loader: "babel-loader", options: {plugins: ["react-refresh/babel"]}}
         ]
       },
       {
