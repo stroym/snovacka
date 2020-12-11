@@ -43,13 +43,13 @@ export class Nipples {
 export class NipplesPenetrable implements Penetrable {
 
   capacity: Capacity;
-  virginity: boolean;
+  virgin: boolean;
 
   //probably some thing eventually, there's only really the "normal" and full on pussynipples
 
-  constructor(capacity: Capacity, virginity = true) {
+  constructor(capacity: Capacity, virgin = true) {
     this.capacity = capacity;
-    this.virginity = virginity;
+    this.virgin = virgin;
   }
 
 }
@@ -57,13 +57,13 @@ export class NipplesPenetrable implements Penetrable {
 export class NipplesInsertable implements Insertable {
 
   size: Size;
-  virginity: boolean;
+  virgin: boolean;
 
   //keep in mind the shape of these can be a penis (including balls)
 
-  constructor(size: Size, virginity: boolean) {
+  constructor(size: Size, virgin: boolean) {
     this.size = size;
-    this.virginity = virginity;
+    this.virgin = virgin;
   }
 
   //TODO I wonder if methods from Insertable using size will work here...

@@ -15,11 +15,11 @@ export class Size {
 export abstract class Insertable implements Virgin {
 
   size: Size;
-  virginity: boolean;
+  virgin: boolean;
 
-  protected constructor(length: number, width: number, virginity: boolean) {
+  protected constructor(length: number, width: number, virgin: boolean) {
     this.size = new Size(length, width);
-    this.virginity = virginity;
+    this.virgin = virgin;
   }
 
 }
@@ -29,8 +29,8 @@ export class Penis extends Insertable {
   urethra: Urethra;
   balls?: Balls;
 
-  constructor(length: number, width: number, urethra: Urethra, balls?: Balls, virginity = true) {
-    super(length, width, virginity);
+  constructor(length: number, width: number, urethra: Urethra, balls?: Balls, virgin = true) {
+    super(length, width, virgin);
     this.urethra = urethra;
     this.balls = balls;
   }
@@ -41,8 +41,8 @@ export class PenisKnotted extends Penis {
 
   knot: Knot;
 
-  constructor(length: number, width: number, urethra: Urethra, knot: Knot, balls?: Balls, virginity?: boolean) {
-    super(length, width, urethra, balls, virginity);
+  constructor(length: number, width: number, urethra: Urethra, knot: Knot, balls?: Balls, virgin?: boolean) {
+    super(length, width, urethra, balls, virgin);
     this.knot = knot;
   }
 
@@ -68,7 +68,7 @@ export class Balls {
 
 }
 
-class Toy extends Insertable { //kinda iffy with the virginity, but eh
+class Toy extends Insertable { //kinda iffy with the virgin, but eh
 
 }
 

@@ -1,6 +1,6 @@
 export interface Virgin {
 
-  virginity: boolean;
+  virgin: boolean;
 
 }
 
@@ -48,11 +48,11 @@ export class Capacity {
 export abstract class Penetrable implements Virgin {
 
   capacity: Capacity;
-  virginity: boolean;
+  virgin: boolean;
 
-  constructor(capacity: Capacity, virginity = true) {
+  constructor(capacity: Capacity, virgin = true) {
     this.capacity = capacity;
-    this.virginity = virginity;
+    this.virgin = virgin;
   }
 
   //TODO methods to evaluate fits, same goes for insertables

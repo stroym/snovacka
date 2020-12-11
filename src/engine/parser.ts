@@ -5,14 +5,16 @@ import {Condition} from "./parser/conditional";
 export default class PlaceholderParser extends String {
 
   static getterPattern = /(\${[0-9A-Za-z.]+[}])/g;
-  static setterPattern = /(\${[0-9A-Za-z.]+\s*=\s*[^=]+})/g;
+  static setterPattern = /(\${[0-9A-Za-z.]+\s*=\s*[0-9A-Za-z.]+[}])/g;
   static conditionPattern = /(if\([0-9A-Za-z.]+\s*(!=|==|>|>=|<|<=)\s*[0-9A-Za-z.]+\)\s*{\s*.*\s*[}])/g;
 
   static parse(text: string) {
+    //TODO conditions should be first, for obvious reasons... but then they'll have to call sets and gets internally
+    // there might be some issues with additive rendering (if that's ever a thing) but I'll worry about that later
     return new PlaceholderParser(text)
-      .resolvePlaceholderGets()
-      .resolveConditionals()      //TODO conditionals should probably be resolved first
       .resolvePlaceholderSets()
+      .resolvePlaceholderGets()
+      .resolveConditionals()
       .valueOf();
   }
 
