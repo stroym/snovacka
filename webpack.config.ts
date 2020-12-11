@@ -1,7 +1,6 @@
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin";
 import webpack from "webpack";
 import HtmlWebpackPlugin from "html-webpack-plugin";
-import {CleanWebpackPlugin} from "clean-webpack-plugin";
 import {ForkTsCheckerWebpackPlugin} from "fork-ts-checker-webpack-plugin/lib/ForkTsCheckerWebpackPlugin";
 
 //TODO setup environments
@@ -21,9 +20,7 @@ module.exports = {
       {
         test: /\.ts(x?)$/,
         exclude: /node_modules/,
-        use: [
-          {loader: "babel-loader", options: {plugins: ["react-refresh/babel"]}}
-        ]
+        use: "babel-loader"
       },
       {
         test: /\.md$/,
@@ -36,7 +33,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new CleanWebpackPlugin(),
+    // new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       filename: "./index.html",
       template: "./public/index.html"
