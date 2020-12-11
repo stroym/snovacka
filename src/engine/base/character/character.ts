@@ -23,6 +23,8 @@ abstract class Character<A extends Appearance> {
 
 }
 
+//TODO shorthands for parsing
+
 export class NonPlayableCharacter<A extends Appearance> extends Character<A> {
 
   //TODO further split down to dateable and just background?

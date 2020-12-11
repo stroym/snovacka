@@ -1,11 +1,11 @@
-import {postProcess} from "../parser";
+import PlaceholderParser from "../parser";
 
 export default class Scene {
 
   readonly id: string;
   readonly prompt: string;
   readonly text: () => string;
-  readonly requirements?: Requirements; //check if option can even be selected + provide feedback about requirements
+  // readonly requirements?: Requirements; //check if option can even be selected + provide feedback about requirements
   readonly parents: Scene[] = new Array<Scene>();
   readonly children: Scene[] = new Array<Scene>();
 
@@ -19,7 +19,7 @@ export default class Scene {
   constructor(id: string, prompt: string, text: string | (() => string), parents: Scene | Scene[]) {
     this.id = id;
     this.prompt = prompt;
-    this.text = typeof text === "string" ? (() => postProcess(text)) : text; //don't postprocess if text is a function
+    this.text = typeof text === "string" ? () => PlaceholderParser.parse(text) : text; //don't postprocess if text is a function
 
     if (Array.isArray(parents)) {
       parents.forEach(parent => {

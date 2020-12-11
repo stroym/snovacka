@@ -4,7 +4,11 @@ Cras eu lacinia sapien. In eget mollis leo. Donec augue quam, consequat quis bla
 
 ${eliza.name.fullName}
 
-${eliza.name.firstName=Eli}
+${eliza.personal.height}
+
+${eliza.personal.height=333}
+
+${eliza.personal.height}
 
 if(${eliza.appearance.breasts.cupSize}>4){
 Etiam fringilla mauris quis ligula sollicitudin, et euismod sapien tincidunt. Ut sit amet maximus orci. Ut ut velit eu sem hendrerit luctus. Quisque mattis metus ultrices lorem ullamcorper maximus. Mauris quis dignissim diam, ut auctor nibh. Donec tempor, nibh nec convallis sagittis, magna libero rutrum felis, non aliquet enim nisl non orci. Duis nibh erat, rutrum suscipit commodo ut, scelerisque ac sem.

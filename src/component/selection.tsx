@@ -26,8 +26,6 @@ export default class Selection extends React.Component<OptionProps> {
   }
 
   listenForKeyPress(e: KeyboardEvent) {
-    console.log(e.code);
-
     if (e.code.match("Digit[0-9]+") || e.code.match("Numpad[0-9]+")) {
       if (parseInt(e.code.slice(e.code.length - 1)) === this.props.number) {
         this.props.updateScene(this.props.scene);
