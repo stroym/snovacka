@@ -4,25 +4,15 @@ Cras eu lacinia sapien. In eget mollis leo. Donec augue quam, consequat quis bla
 
 ${eliza.name.fullName}
 
-${eliza.appearance.mouth.capacity.depth}
-
-${eliza.appearance.mouth.capacity.depth=555}
-
-${eliza.appearance.mouth.capacity.depth}
-
-${eliza.appearance.mouth.capacity.width}
-
 ${eliza.appearance.mouth.capacity.width=111}
 
 ${eliza.appearance.mouth.capacity.width}
-
-${eliza.appearance.mouth.virgin}
 
 ${eliza.appearance.mouth.virgin=false}
 
 ${eliza.appearance.mouth.virgin}
 
-if(${eliza.appearance.breasts.cupSize}>4){
+if(${eliza.appearance.breasts.cupSize}>3){
 Etiam fringilla mauris quis ligula sollicitudin, et euismod sapien tincidunt. Ut sit amet maximus orci. Ut ut velit eu sem hendrerit luctus. Quisque mattis metus ultrices lorem ullamcorper maximus. Mauris quis dignissim diam, ut auctor nibh. Donec tempor, nibh nec convallis sagittis, magna libero rutrum felis, non aliquet enim nisl non orci. Duis nibh erat, rutrum suscipit commodo ut, scelerisque ac sem.
 }
 

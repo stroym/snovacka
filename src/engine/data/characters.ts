@@ -21,6 +21,8 @@ export let eliza = new NonPlayableCharacter<AppearanceLewd>(
   new Attributes()
 );
 
+//character map is good enough for now, but if there's more things, it'll probably have to go to the same map
+// maybe a map of maps... but that'd require prefixing the accessors (e.g. eliza... → character.eliza)
 export let characters = new Map<string, NonPlayableCharacter<Appearance>>([
   ["eliza", eliza]
 ]);

@@ -1,27 +1,47 @@
 import characters from "./data/characters";
-import {getGetterPlaceholders, getSetterPlaceholders} from "./parser/placeholder";
+import {getPlaceholders, GetterPlaceholder, SetterPlaceholder} from "./parser/placeholder";
 import {Condition} from "./parser/conditional";
+
+export class Patterns {
+
+  static placeholderGet = /(\$[{][0-9A-Za-z.]+[}])/g;
+  static placeholderSet = /(\$[{][0-9A-Za-z.]+\s*=\s*[0-9A-Za-z.]+[}])/g;
+
+  static value = /([0-9A-Za-z]|\${[0-9A-Za-z.]+})/;
+  static eq = /\s*(!=|==|>|>=|<|<=)\s*/;
+  static condition = new RegExp(
+    /\bif\b\(/.source + Patterns.value.source + Patterns.eq.source + Patterns.value.source + /\)/.source
+    + /[{]\s*.*\s*[}]/.source, "g"
+  );
+
+  ///(\bif\b|\belif\b|\belse\b)/ - complex conditions starts
+}
 
 export default class PlaceholderParser extends String {
 
-  static getterPattern = /(\${[0-9A-Za-z.]+[}])/g;
-  static setterPattern = /(\${[0-9A-Za-z.]+\s*=\s*[0-9A-Za-z.]+[}])/g;
-  static conditionPattern = /(if\([0-9A-Za-z.]+\s*(!=|==|>|>=|<|<=)\s*[0-9A-Za-z.]+\)\s*{\s*.*\s*[}])/g;
-
   static parse(text: string) {
-    //TODO conditions should be first, for obvious reasons... but then they'll have to call sets and gets internally
-    // there might be some issues with additive rendering (if that's ever a thing) but I'll worry about that later
     return new PlaceholderParser(text)
+      .resolveConditionals()
       .resolvePlaceholderSets()
       .resolvePlaceholderGets()
-      .resolveConditionals()
+      .valueOf();
+  }
+
+  static parseGetsOnly(text: string) {
+    return new PlaceholderParser(text)
+      .resolvePlaceholderGets()
       .valueOf();
   }
 
   private resolvePlaceholderSets(): PlaceholderParser {
     let temp = this.valueOf();
+    let placeholders = getPlaceholders(temp, Patterns.placeholderSet, (value: string) => {
+      return new SetterPlaceholder(value);
+    });
 
-    getSetterPlaceholders(temp, PlaceholderParser.setterPattern).forEach(p => {
+    console.debug(placeholders);
+
+    placeholders.forEach(p => {
       temp = p.update(characters, temp);
     });
 
@@ -30,9 +50,13 @@ export default class PlaceholderParser extends String {
 
   private resolvePlaceholderGets(): PlaceholderParser {
     let temp = this.valueOf();
+    let placeholders = getPlaceholders(temp, Patterns.placeholderGet, (value: string) => {
+      return new GetterPlaceholder(value);
+    });
 
-    //as is, it can only resolve character placeholders and it relies on a map to do that; not ideal, but I doubt there's a better way
-    getGetterPlaceholders(temp, PlaceholderParser.getterPattern).forEach(p => {
+    console.debug(placeholders);
+
+    placeholders.forEach(p => {
       temp = p.replace(characters, temp);
     });
 
@@ -41,7 +65,9 @@ export default class PlaceholderParser extends String {
 
   private resolveConditionals(): PlaceholderParser {
     let temp = this.valueOf();
-    let blocks = temp.match(PlaceholderParser.conditionPattern);
+    let blocks = temp.match(Patterns.condition);
+
+    console.debug(blocks);
 
     if (blocks) {
       for (let block of blocks) {

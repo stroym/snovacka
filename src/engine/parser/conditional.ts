@@ -1,3 +1,5 @@
+import PlaceholderParser from "../parser";
+
 export enum Comparison {
   EQ = "==",
   NE = "!=",
@@ -34,47 +36,27 @@ export class Conditional {
 }
 
 //TODO complex conditions (&&, ||, () priority) & negation?
+//TODO nested conditions
 
 export class Condition {
 
-  type: Comparison;
-  left: string;
-  right: string;
-  content: string;
+  private readonly value: string;
+  private readonly type: string;
+  private readonly left: string;
+  private readonly right: string;
+  private readonly content: string;
 
   constructor(str: string) {
-    this.type = Condition.resolveType(str);
-    let conditional = Condition.verify(str.substring(3, str.indexOf(")")));
-    this.left = conditional.substring(0, conditional.indexOf(this.type)).trim();
-    this.right = conditional.substring(conditional.indexOf(this.type) + this.type.length, str.length).trim();
-    this.content = str.substring(str.indexOf("{") + 1, str.indexOf("}"));
-  }
+    this.type = str.match(/([!=<>]+)/)![0];
+    this.value = str.substring(str.indexOf("(") + 1, str.lastIndexOf(")"));     //TODO this will only work for simple conditions... and normal parantheses will fuck it up
+    let c = this.value.split(this.type);
+    this.left = PlaceholderParser.parseGetsOnly(c[0].trim());
+    this.right = PlaceholderParser.parseGetsOnly(c[1].trim());
 
-  private static resolveType(relation: string): Comparison {
-    switch (relation.match(/([=<>]+)/)![0]) {
-      case Comparison.EQ:
-        return Comparison.EQ;
-      case Comparison.NE:
-        return Comparison.NE;
-      case Comparison.LT:
-        return Comparison.LT;
-      case Comparison.LE:
-        return Comparison.LE;
-      case Comparison.GT:
-        return Comparison.GT;
-      case Comparison.GE:
-        return Comparison.GE;
-      default:
-        throw new Error("Invalid comparison value: " + relation + "!");
-    }
-  }
-
-  private static verify(condition: string): string {
-    if (condition.match(/([0-9]+[=<>]+[0-9]+)/) || condition.match(/([A-Za-z0-9]+[=<>]+[A-Za-z0-9]+)/)) {
-      return condition;
-    } else {
-      throw new Error("Bad condition: " + condition + "!");
-    }
+    this.content = str.substring(str.indexOf("){") + 2, str.lastIndexOf("}"));  //TODO this also needs to be more robust
+    console.log(this.left);
+    console.log(this.right);
+    console.log(this.content);
   }
 
   compare() {
@@ -94,8 +76,19 @@ export class Condition {
     }
   }
 
+  resolvedValue(): string {
+    return this.left + this.type + this.right;
+  }
+
   resolve() {
-    return this.compare() ? this.content : "";
+    let result = this.compare();
+    console.debug(this.value + " → " + this.resolvedValue() + " → " + result);
+
+    if (result) {
+      return PlaceholderParser.parse(this.content);
+    } else {
+      return "";
+    }
   }
 
 }

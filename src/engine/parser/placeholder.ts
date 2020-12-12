@@ -1,8 +1,8 @@
 abstract class Placeholder {
 
-  readonly raw: string;
-  readonly objectName: string;
-  readonly properties: string[] = new Array<string>();
+  protected readonly raw: string;
+  protected readonly objectName: string;
+  protected readonly properties: string[] = new Array<string>();
 
   protected constructor(raw: string, propertiesEnd: number) {
     let firstDot = raw.indexOf(".");
@@ -41,8 +41,8 @@ export class GetterPlaceholder extends Placeholder {
 
 export class SetterPlaceholder extends Placeholder {
 
-  readonly value: string;
-  readonly lastProp: string;
+  private readonly value: string;
+  private readonly lastProp: string;
 
   constructor(raw: string) {
     super(raw, raw.indexOf("="));
@@ -67,18 +67,6 @@ export class SetterPlaceholder extends Placeholder {
       return val;
     }
   }
-}
-
-export function getGetterPlaceholders(text: string, regex: RegExp): Array<GetterPlaceholder> {
-  return getPlaceholders(text, regex, (value: string) => {
-    return new GetterPlaceholder(value);
-  });
-}
-
-export function getSetterPlaceholders(text: string, regex: RegExp): Array<SetterPlaceholder> {
-  return getPlaceholders(text, regex, (value: string) => {
-    return new SetterPlaceholder(value);
-  }, false);
 }
 
 export function getPlaceholders(text: string, regex: RegExp, retype: any, onlyUnique = true): Array<any> {
