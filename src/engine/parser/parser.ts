@@ -1,6 +1,6 @@
-import characters from "./data/characters";
-import {getPlaceholders, GetterPlaceholder, SetterPlaceholder} from "./parser/placeholder";
-import {Condition} from "./parser/conditional";
+import characters from "../data/characters";
+import {getPlaceholders, GetterPlaceholder, SetterPlaceholder} from "./placeholder";
+import {Condition} from "./conditional";
 
 export class Patterns {
 

@@ -1,4 +1,4 @@
-import PlaceholderParser from "../parser";
+import PlaceholderParser from "../parser/parser";
 
 export default class Scene {
 

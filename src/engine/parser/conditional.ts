@@ -1,4 +1,4 @@
-import PlaceholderParser from "../parser";
+import PlaceholderParser from "./parser";
 
 export enum Comparison {
   EQ = "==",
