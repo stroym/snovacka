@@ -1,6 +1,6 @@
 import characters from "../data/characters";
 import {getPlaceholders, GetterPlaceholder, SetterPlaceholder} from "./placeholder";
-import {Condition} from "./conditional";
+import {Conditional} from "./conditional";
 
 export class Patterns {
 
@@ -14,16 +14,22 @@ export class Patterns {
     + /[{]\s*.*\s*[}]/.source, "g"
   );
 
+  static attribute = /(<([a-z]+)>[\s\S]+<\/\2+>)/g;
+  static conditionBlock = /(<(condition)>[\s\S]+?<\/(condition)>)/g;
+
   ///(\bif\b|\belif\b|\belse\b)/ - complex conditions starts
 }
 
 export default class PlaceholderParser extends String {
 
   static parse(text: string) {
+    // console.log(text.match(Patterns.attribute));
+    // console.log(text.split("\n\n")); - good after initial processing for sequential rendering
+
     return new PlaceholderParser(text)
       .resolveConditionals()
-      .resolvePlaceholderSets()
-      .resolvePlaceholderGets()
+      // .resolvePlaceholderSets()
+      // .resolvePlaceholderGets()
       .valueOf();
   }
 
@@ -65,18 +71,35 @@ export default class PlaceholderParser extends String {
 
   private resolveConditionals(): PlaceholderParser {
     let temp = this.valueOf();
-    let blocks = temp.match(Patterns.condition);
+    let blocks = temp.match(Patterns.conditionBlock);
 
     console.debug(blocks);
 
     if (blocks) {
       for (let block of blocks) {
-        let condition = new Condition(block);
-        temp = temp.replace(block, condition.resolve());
+        let conditional = new Conditional(block);
+
+        // temp = temp.replace(block, condition.resolve());
       }
     }
 
     return new PlaceholderParser(temp);
   }
+
+  // private resolveConditionals(): PlaceholderParser {
+  //   let temp = this.valueOf();
+  //   let blocks = temp.match(Patterns.condition);
+  //
+  //   console.debug(blocks);
+  //
+  //   if (blocks) {
+  //     for (let block of blocks) {
+  //       let condition = new Condition(block);
+  //       temp = temp.replace(block, condition.resolve());
+  //     }
+  //   }
+  //
+  //   return new PlaceholderParser(temp);
+  // }
 
 }

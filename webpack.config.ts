@@ -7,9 +7,15 @@ import {ForkTsCheckerWebpackPlugin} from "fork-ts-checker-webpack-plugin/lib/For
 module.exports = {
   mode: "development",
   entry: "./src/index.tsx",
+  output: {
+    path: __dirname + "/build",
+    filename: "bundle.js"
+  },
+  devtool: "source-map",
   devServer: {
     open: true,
-    hot: true
+    hot: true,
+    port: 3000
   },
   resolve: {
     extensions: [".js", ".ts", ".tsx"],

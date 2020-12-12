@@ -11,19 +11,19 @@ export enum Comparison {
 
 export class Conditional {
 
-  conditions: Condition[] = new Array<Condition>();
+  raw: string;
+  parts: string[] = new Array<string>();
 
-  constructor(str: string) {
+  constructor(raw: string) {
+    this.raw = raw;
 
+    //iteratively handle first level conditionals, handle nested things in condition...
+    //but you gotta count with the nesteds here, too - one way to get around that could be indentation checking...
+    //or multiples of special characters
   }
 
   resolve(): string {
-    for (let condition of this.conditions) {
-      if (condition.compare()) {
-        return condition.resolve();
-      }
 
-    }
     return "";
   }
 
