@@ -11,8 +11,12 @@ export enum Comparison {
 
 export class Conditional {
 
+  start?: number;
+  end?: number;
+  stage?: string; //enum IF/ELIF/ELSE
   raw: string;
-  parts: string[] = new Array<string>();
+  stages: Conditional[] = new Array<Conditional>();
+  nested: Conditional[] = new Array<Conditional>();
 
   constructor(raw: string) {
     this.raw = raw;
@@ -23,14 +27,16 @@ export class Conditional {
   }
 
   resolve(): string {
-
-    return "";
+    return this.raw.replaceAll("<condition>", "").replaceAll("</condition>", "");
   }
 
+  //split if into if, if else and else parts - nested ifs not expected
+  //assume <condition> blocks are taken out
   private split(str: string) {
-    // if () {}
-    // else if() {}
-    // else {}
+    // get if (){
+    // find next }
+    // check for if else/else
+    // find closing } if if else/else found
   }
 
 }
@@ -54,9 +60,6 @@ export class Condition {
     this.right = PlaceholderParser.parseGetsOnly(c[1].trim());
 
     this.content = str.substring(str.indexOf("){") + 2, str.lastIndexOf("}"));  //TODO this also needs to be more robust
-    console.log(this.left);
-    console.log(this.right);
-    console.log(this.content);
   }
 
   compare() {
@@ -80,7 +83,7 @@ export class Condition {
     return this.left + this.type + this.right;
   }
 
-  resolve() {
+  resolve(): string {
     let result = this.compare();
     console.debug(this.value + " → " + this.resolvedValue() + " → " + result);
 

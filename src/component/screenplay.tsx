@@ -19,7 +19,7 @@ export default class Screenplay extends React.Component<{}, ChildContentProps> {
   render() {
     return (
       <div className="snovacka-screenplay">
-        <TextView content={this.state.scene.text()}/>
+        <TextView scene={this.state.scene}/>
         <SelectionsContainer scenes={this.state.scene.children} updateScene={this.updateScene}/>
       </div>
     );

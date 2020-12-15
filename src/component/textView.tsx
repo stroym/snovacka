@@ -1,6 +1,8 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
+import Scene from "../engine/base/scene";
 
+//TODO additive rendering support
 export default class TextView extends React.Component<TextAreaProps> {
 
   private readonly selfRef: React.RefObject<HTMLDivElement>;
@@ -15,7 +17,7 @@ export default class TextView extends React.Component<TextAreaProps> {
   render() {
     return (
       <div ref={this.selfRef} id="snovacka-text-area">
-        <ReactMarkdown source={this.props.content}/>
+        <ReactMarkdown source={this.props.scene.text()}/>
       </div>
     );
   }
@@ -37,5 +39,5 @@ export default class TextView extends React.Component<TextAreaProps> {
 }
 
 type TextAreaProps = {
-  content: string
+  scene: Scene
 }

@@ -1,45 +1,61 @@
 import characters from "../data/characters";
 import {getPlaceholders, GetterPlaceholder, SetterPlaceholder} from "./placeholder";
-import {Conditional} from "./conditional";
 
 export class Patterns {
 
-  static placeholderGet = /(\$[{][0-9A-Za-z.]+[}])/g;
-  static placeholderSet = /(\$[{][0-9A-Za-z.]+\s*=\s*[0-9A-Za-z.]+[}])/g;
+  static placeholder = /(\${[0-9A-Za-z.]+})/;
 
-  static value = /([0-9A-Za-z]|\${[0-9A-Za-z.]+})/;
+  static placeholderGet = new RegExp(Patterns.placeholder, "g");
+  static placeholderSet = /(\${[0-9A-Za-z.]+\s*=\s*[0-9A-Za-z]+})/g;
+
+  static value = new RegExp(`([0-9A-Za-z]|${Patterns.placeholder.source})`);
   static eq = /\s*(!=|==|>|>=|<|<=)\s*/;
-  static condition = new RegExp(
-    /\bif\b\(/.source + Patterns.value.source + Patterns.eq.source + Patterns.value.source + /\)/.source
-    + /[{]\s*.*\s*[}]/.source, "g"
-  );
 
-  static attribute = /(<([a-z]+)>[\s\S]+<\/\2+>)/g;
-  static conditionBlock = /(<(condition)>[\s\S]+?<\/(condition)>)/g;
+  static attributeLazy = /(<([a-z]+)>[\s\S]+?<(\/\2+)>)/g;
+  static attribute = /(<([a-z]+)>[\s\S]+<(\/\2+)>)/g;
 
-  ///(\bif\b|\belif\b|\belse\b)/ - complex conditions starts
 }
 
 export default class PlaceholderParser extends String {
 
   static parse(text: string) {
-    // console.log(text.match(Patterns.attribute));
-    // console.log(text.split("\n\n")); - good after initial processing for sequential rendering
+    // console.log(text.split("\n\n")); - good after initial processing for sequential rendering maybe
 
     return new PlaceholderParser(text)
-      .resolveConditionals()
-      // .resolvePlaceholderSets()
-      // .resolvePlaceholderGets()
-      .valueOf();
+      .resolveAttributes();
+    // .resolveSets()
+    // .resolveGets();
   }
 
   static parseGetsOnly(text: string) {
-    return new PlaceholderParser(text)
-      .resolvePlaceholderGets()
-      .valueOf();
+    return new PlaceholderParser(text).resolveGets();
   }
 
-  private resolvePlaceholderSets(): PlaceholderParser {
+  private resolveAttributes(): string {
+    let temp = this.valueOf();
+    let attributes = temp.match(Patterns.attributeLazy);
+
+    let parsed = [];
+    if (attributes) {
+      //filter attributes to process each type separately
+      for (let attribute of attributes) {
+        parsed.push(new Attribute(attribute));
+
+        if (attribute.includes("<condition>")) {
+
+          //try to resolve nested conditions without using special tags for it
+
+          // temp = temp.replace(attribute, new Condition(attribute).resolve());
+        }
+      }
+
+      console.debug(parsed);
+    }
+
+    return temp;
+  }
+
+  private resolveSets(): string {
     let temp = this.valueOf();
     let placeholders = getPlaceholders(temp, Patterns.placeholderSet, (value: string) => {
       return new SetterPlaceholder(value);
@@ -51,10 +67,10 @@ export default class PlaceholderParser extends String {
       temp = p.update(characters, temp);
     });
 
-    return new PlaceholderParser(temp);
+    return temp;
   }
 
-  private resolvePlaceholderGets(): PlaceholderParser {
+  private resolveGets(): string {
     let temp = this.valueOf();
     let placeholders = getPlaceholders(temp, Patterns.placeholderGet, (value: string) => {
       return new GetterPlaceholder(value);
@@ -66,40 +82,41 @@ export default class PlaceholderParser extends String {
       temp = p.replace(characters, temp);
     });
 
-    return new PlaceholderParser(temp);
+    return temp;
   }
 
-  private resolveConditionals(): PlaceholderParser {
-    let temp = this.valueOf();
-    let blocks = temp.match(Patterns.conditionBlock);
+}
 
-    console.debug(blocks);
+class Attribute {
 
-    if (blocks) {
-      for (let block of blocks) {
-        let conditional = new Conditional(block);
+  name: string; //enum/isX methods?
+  content: string;
+  nested: Attribute[] = new Array<Attribute>();
 
-        // temp = temp.replace(block, condition.resolve());
+  //array/map for content and children tags - but you need to keep track of their order
+
+  constructor(str: string) {
+    this.name = str.substring(str.indexOf("<") + 1, str.indexOf(">")).trim();
+    this.content = str.substring(str.indexOf(">") + 1, str.lastIndexOf("</")).trim();
+
+    this.findChildren();
+  }
+
+  //this works when there's no same-tag nesting happening
+  findChildren(): string[] {
+    let temp = this.content.match(Patterns.attribute);
+
+    if (temp) {
+      for (let attribute of temp) {
+        this.nested.push(new Attribute(attribute));
       }
     }
 
-    return new PlaceholderParser(temp);
+    return temp ? temp : [];
   }
 
-  // private resolveConditionals(): PlaceholderParser {
-  //   let temp = this.valueOf();
-  //   let blocks = temp.match(Patterns.condition);
-  //
-  //   console.debug(blocks);
-  //
-  //   if (blocks) {
-  //     for (let block of blocks) {
-  //       let condition = new Condition(block);
-  //       temp = temp.replace(block, condition.resolve());
-  //     }
-  //   }
-  //
-  //   return new PlaceholderParser(temp);
-  // }
+  toString(): string {
+    return this.name + "\n" + this.nested;
+  }
 
 }
