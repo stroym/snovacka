@@ -1,5 +1,6 @@
 import characters from "../data/characters";
 import {getPlaceholders, GetterPlaceholder, SetterPlaceholder} from "./placeholder";
+import {Condition} from "./conditional";
 
 export class Patterns {
 
@@ -13,6 +14,11 @@ export class Patterns {
 
   static attributeLazy = /(<([a-z]+)>[\s\S]+?<(\/\2+)>)/g;
   static attribute = /(<([a-z]+)>[\s\S]+<(\/\2+)>)/g;
+
+  static condition = new RegExp(
+    /\bif\b\(/.source + Patterns.value.source + Patterns.eq.source + Patterns.value.source + /\)/.source
+    + /[{]\s*.*\s*[}]/.source, "g"
+  );
 
 }
 
@@ -33,24 +39,25 @@ export default class PlaceholderParser extends String {
 
   private resolveAttributes(): string {
     let temp = this.valueOf();
-    let attributes = temp.match(Patterns.attributeLazy);
+    // let attributes = temp.match(Patterns.condition);
 
     let parsed = [];
-    if (attributes) {
-      //filter attributes to process each type separately
-      for (let attribute of attributes) {
-        parsed.push(new Attribute(attribute));
+    // if (attributes) {
+    //filter attributes to process each type separately
+    // for (let attribute of attributes) {
 
-        if (attribute.includes("<condition>")) {
+    parsed.push(new Condition(temp));
 
-          //try to resolve nested conditions without using special tags for it
+    // if (attribute.includes("<condition>")) {
 
-          // temp = temp.replace(attribute, new Condition(attribute).resolve());
-        }
-      }
+    //try to resolve nested conditions without using special tags for it
 
-      console.debug(parsed);
-    }
+    // temp = temp.replace(attribute, new Condition(attribute).resolve());
+    // }
+    // }
+
+    // console.debug(parsed);
+    // }
 
     return temp;
   }
@@ -76,7 +83,7 @@ export default class PlaceholderParser extends String {
       return new GetterPlaceholder(value);
     });
 
-    console.debug(placeholders);
+    // console.debug(placeholders);
 
     placeholders.forEach(p => {
       temp = p.replace(characters, temp);
@@ -92,6 +99,7 @@ class Attribute {
   name: string; //enum/isX methods?
   content: string;
   nested: Attribute[] = new Array<Attribute>();
+  parts: string[] = new Array<string>();
 
   //array/map for content and children tags - but you need to keep track of their order
 
@@ -102,7 +110,7 @@ class Attribute {
     this.findChildren();
   }
 
-  //this works when there's no same-tag nesting happening
+  //this works when there's no same-tag nesting happening... which shouldn't happend in attributes
   findChildren(): string[] {
     let temp = this.content.match(Patterns.attribute);
 
