@@ -9,29 +9,33 @@ export enum Comparison {
   GE = ">="
 }
 
+const condi = /(if\(|ef\(|el\()/;
+
 export class Conditional {
 
-  start?: number;
-  end?: number;
-  stage?: string; //enum IF/ELIF/ELSE
   raw: string;
-  stages: Conditional[] = new Array<Conditional>();
-  nested: Conditional[] = new Array<Conditional>();
+  stages: Condition[] = new Array<Condition>();
 
   constructor(raw: string) {
     this.raw = raw;
 
-    //iteratively handle first level conditionals, handle nested things in condition...
-    //but you gotta count with the nesteds here, too - one way to get around that could be indentation checking...
-    //or multiples of special characters
+    let temp = raw;
+    let blockStart = temp.match(condi);
+
+    while (blockStart != null) {
+      let opening = temp.indexOf("{");
+      let closing = findClosingParen(temp, opening);
+
+      this.stages.push(new Condition(temp.substring(blockStart.index!, closing)));
+      temp = temp.substring(closing + 1);
+      blockStart = temp.match(condi);
+    }
   }
 
   resolve(): string {
     return this.raw.replaceAll("<condition>", "").replaceAll("</condition>", "");
   }
 
-  //split if into if, if else and else parts - nested ifs not expected
-  //assume <condition> blocks are taken out
   private split(str: string) {
     // get if (){
     // find next }
@@ -51,17 +55,18 @@ export class Condition {
   private readonly left: string;
   private readonly right: string;
   private readonly content: string;
-  nested: Condition[] = new Array<Condition>();
-  parts: string[] = new Array<string>();
+  private readonly nested: Conditional[] = new Array<Conditional>();
   // private readonly name: string;
   private readonly value: string;
 
-  constructor(str: string) {
-    this.name = str.substring(0, str.indexOf("("));
+  constructor(raw: string) {
+    this.name = raw.substring(0, 2);
 
-    if (this.name === "if" || this.name === "elif") {
-      this.type = str.match(/([!=<>]+)/)![0].trim();
-      this.value = str.substring(str.indexOf("(") + 1, str.indexOf("){")).trim();     //TODO this will only work for simple conditions... and normal parantheses will fuck it up
+    let blockStart = raw.indexOf("){");
+
+    if (this.name === "if" || this.name === "ef") {
+      this.type = raw.match(/([!=<>]+)/)![0].trim();
+      this.value = raw.substring(raw.indexOf("(") + 1, blockStart).trim();     //TODO this will only work for simple conditions... and normal parantheses will fuck it up
       let c = this.value.split(this.type);
       this.left = PlaceholderParser.parseGetsOnly(c[0].trim());
       this.right = PlaceholderParser.parseGetsOnly(c[1].trim());
@@ -72,36 +77,14 @@ export class Condition {
       this.right = "";
     }
 
-    // this.content = str.substring(str.indexOf("){") + 2, str.lastIndexOf("}"));  //TODO this also needs to be more robust
-    // this.content = str.substring(start + 2, findClosingParen(str, start + 2));
+    this.content = raw.substring(blockStart + 2, raw.length - 1).trim();
 
-    let start = str.indexOf("){");
-    let temp = str.substring(start + 1, str.length);
+    let nested = this.content.indexOf("if(");
 
-    this.content = str.substring(start + 2, findClosingParen(str, start + 1)).trim();
-
-    while (temp.includes("{")) {
-      let opening = temp.indexOf("{");
-      let closing = findClosingParen(temp, opening);
-
-      this.parts.push(temp.substring(opening + 1, closing - 1)); //push new condition - but move this into conditional, this is supposed to be for if/elif/else parts
-      // not for the complete thing
-      temp = temp.substring(closing + 1);
+    //add while to handle multiple nested ifs of the same level
+    if (nested > 0) {
+      this.nested.push(new Conditional(this.content));
     }
-
-    console.debug(this);
-
-    for (let part of this.parts) {
-      //check if part condition is true, if yes, search for nested, if not, skip
-
-      if (part.includes("if(")) {
-        console.debug(part);
-        let nested = new Condition(part);
-        this.nested.push(nested);
-      }
-    }
-
-    // console.debug(this);
   }
 
   compare() {

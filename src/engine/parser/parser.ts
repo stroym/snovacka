@@ -1,6 +1,6 @@
 import characters from "../data/characters";
 import {getPlaceholders, GetterPlaceholder, SetterPlaceholder} from "./placeholder";
-import {Condition} from "./conditional";
+import {Conditional} from "./conditional";
 
 export class Patterns {
 
@@ -46,8 +46,9 @@ export default class PlaceholderParser extends String {
     //filter attributes to process each type separately
     // for (let attribute of attributes) {
 
-    parsed.push(new Condition(temp));
+    parsed.push(new Conditional(temp));
 
+    console.debug(parsed);
     // if (attribute.includes("<condition>")) {
 
     //try to resolve nested conditions without using special tags for it
