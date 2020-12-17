@@ -1,47 +1,37 @@
-if(eliza.appearance.breasts.cupSize>1){
-if
-    if(eliza.appearance.breasts.cupSize>2){
-    if2
-    }ef(eliza.appearance.breasts.cupSize>1){
-    ef2
-    }el(){
-    el2
-    }
-    
-    if(eliza.appearance.breasts.cupSize>2){
-    if2
-    }ef(eliza.appearance.breasts.cupSize>1){
-    ef2
-    }el(){
-    el2
-    }
-    
-}ef(eliza.appearance.breasts.cupSize>2){
-ef
-}el(){
-el
-}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aliquam libero et luctus consectetur.
 
-if(eliza.appearance.breasts.cupSize>1){
-if
-    if(eliza.appearance.breasts.cupSize>2){
-    if2
-    }ef(eliza.appearance.breasts.cupSize>1){
-    ef2
-    }el(){
-    el2
-    }
+${eliza.appearance.mouth.capacity.width=111}
+
+<condition>
+<if condi="eliza.blob">
+if1
+
+<if condi="eliza.boob">
+if2
+</if>
+<else>
+else2
+</else>
     
-    if(eliza.appearance.breasts.cupSize>2){
-    if2
-    }ef(eliza.appearance.breasts.cupSize>1){
-    ef2
-    }el(){
-    el2
-    }
+<if condi="eliza.ppp">
+if3
+</if>
     
-}ef(eliza.appearance.breasts.cupSize>2){
-ef
-}el(){
-el
-}
+<set key="val1">beep</set>
+<set key="val1">boop</set>
+</if>
+<elif condi="eliza.boob">
+elif1
+</elif>
+<elif condi="eliza.beep">
+elif2
+</elif>
+<else>
+else1
+</else>
+</condition>
+
+asdasdad
+
+asdasdasd
+asdasdadas

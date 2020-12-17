@@ -19,7 +19,11 @@ module.exports = {
   },
   resolve: {
     extensions: [".js", ".ts", ".tsx"],
-    fallback: {"path": false}
+    fallback: {
+      "path": false,
+      "timers": "timers-browserify",
+      "stream": "stream-browserify"
+    }
   },
   module: {
     rules: [

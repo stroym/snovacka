@@ -1,6 +1,7 @@
 import characters from "../data/characters";
 import {getPlaceholders, GetterPlaceholder, SetterPlaceholder} from "./placeholder";
-import {Conditional} from "./conditional";
+import {parseString} from "xml2js";
+import ConditionDTO, {Condition} from "./dto/condition";
 
 export class Patterns {
 
@@ -15,10 +16,10 @@ export class Patterns {
   static attributeLazy = /(<([a-z]+)>[\s\S]+?<(\/\2+)>)/g;
   static attribute = /(<([a-z]+)>[\s\S]+<(\/\2+)>)/g;
 
-  static condition = new RegExp(
-    /\bif\b\(/.source + Patterns.value.source + Patterns.eq.source + Patterns.value.source + /\)/.source
-    + /[{]\s*.*\s*[}]/.source, "g"
-  );
+  // static condition = new RegExp(
+  //   /\bif\b\(/.source + Patterns.value.source + Patterns.eq.source + Patterns.value.source + /\)/.source
+  //   + /[{]\s*.*\s*[}]/.source, "g"
+  // );
 
 }
 
@@ -26,6 +27,8 @@ export default class PlaceholderParser extends String {
 
   static parse(text: string) {
     // console.log(text.split("\n\n")); - good after initial processing for sequential rendering maybe
+
+    // console.debug(text.split("\n\n"));
 
     return new PlaceholderParser(text)
       .resolveAttributes();
@@ -39,26 +42,40 @@ export default class PlaceholderParser extends String {
 
   private resolveAttributes(): string {
     let temp = this.valueOf();
-    // let attributes = temp.match(Patterns.condition);
+    let attributes = temp.match(Patterns.attributeLazy);
 
-    let parsed = [];
-    // if (attributes) {
-    //filter attributes to process each type separately
-    // for (let attribute of attributes) {
+    let parsed = new Array<Condition>();
+    if (attributes) {
+      // filter attributes to process each type separately
+      for (let attribute of attributes) {
 
-    parsed.push(new Conditional(temp));
+        parseString(attribute, {
+          trim: true,
+          attrkey: "attributes",
+          charkey: "content",
+          explicitCharkey: true,
+          childkey: "nested",
+          explicitChildren: true,
+          explicitArray: false
+        }, function (err, result) {
+          parsed.push(new ConditionDTO(result.condition).nested);
+        });
+
+        // console.debug(new DOMParser().parseFromString(attribute, "text/xml").getElementsByTagName("condition"));
+        // console.debug(new DOMParser().parseFromString(attribute, "text/xml").getElementsByTagName("condition")[0].children);
+
+        // parsed.push(new Conditional(temp));
+        // console.debug(parsed);
+        // if (attribute.includes("<condition>")) {
+        //
+        //   // try to resolve nested conditions without using special tags for it
+        //
+        //   temp = temp.replace(attribute, new Condition(attribute).resolve());
+        // }
+      }
+    }
 
     console.debug(parsed);
-    // if (attribute.includes("<condition>")) {
-
-    //try to resolve nested conditions without using special tags for it
-
-    // temp = temp.replace(attribute, new Condition(attribute).resolve());
-    // }
-    // }
-
-    // console.debug(parsed);
-    // }
 
     return temp;
   }
