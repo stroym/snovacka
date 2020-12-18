@@ -1,14 +1,15 @@
 import PlaceholderParser from "../parser/parser";
+import Conditional from "../parser/conditional";
 
 export default class Scene {
 
   readonly id: string;
   readonly prompt: string;
-  //different from a new scene
   readonly parents: Scene[] = new Array<Scene>();
   // readonly requirements?: Requirements; //check if option can even be selected + provide feedback about requirements
   //sections? = one scene could interactively ask for input and render more text depending on choice - this is slightly
-  private readonly _text: string | (() => string);
+  //different from a new scene
+  readonly text: string | (() => string);
   readonly children: Scene[] = new Array<Scene>();
 
   /**
@@ -21,7 +22,7 @@ export default class Scene {
   constructor(id: string, prompt: string, text: string | (() => string), parents: Scene | Scene[]) {
     this.id = id;
     this.prompt = prompt;
-    this._text = text;
+    this.text = text;
 
     if (Array.isArray(parents)) {
       parents.forEach(parent => {
@@ -40,9 +41,44 @@ export default class Scene {
     this.children.concat(scenes);
   }
 
-  get text(): () => string {
+  get render(): () => string {
     //don't postprocess if text is a function
-    return typeof this._text === "string" ? () => PlaceholderParser.parse(this._text as string) : this._text;
+
+    if (typeof this.text === "string") {
+      let paragraphs = PlaceholderParser.prepare(this.text);
+      let replaced = PlaceholderParser.parse(this.text); //TODO
+
+      return () => replaced;
+    } else {
+      return this.text;
+    }
   }
 
 }
+
+export class Block {
+
+  condition?: Conditional;
+
+  constructor(content: string, condition?: Conditional) {
+    this._content = content;
+    this.condition = condition;
+  }
+
+  private _content: string;
+
+  get content(): string {
+    if (!this.condition) {
+      return this._content;
+    } else {
+      //TODO resolve condition and return the relevant string
+      return "";
+    }
+  }
+
+  static fromConditional(condition: Conditional): Block {
+    return new Block("", condition);
+  }
+
+}
+

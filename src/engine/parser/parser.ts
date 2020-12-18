@@ -1,7 +1,8 @@
 import characters from "../data/characters";
 import {getPlaceholders, GetterPlaceholder, SetterPlaceholder} from "./placeholder";
 import {parseString} from "xml2js";
-import ConditionDTO, {Condition} from "./dto/condition";
+import Conditional from "./conditional";
+import {Block} from "../base/scene";
 
 export class Patterns {
 
@@ -13,8 +14,9 @@ export class Patterns {
   static value = new RegExp(`([0-9A-Za-z]|${Patterns.placeholder.source})`);
   static eq = /\s*(!=|==|>|>=|<|<=)\s*/;
 
-  static attributeLazy = /(<([a-z]+)>[\s\S]+?<(\/\2+)>)/g;
-  static attribute = /(<([a-z]+)>[\s\S]+<(\/\2+)>)/g;
+  static attributeLazy = /(<([a-z])>[\s\S]+?<(\/\2)>)/g;
+  static attribute = /(<([a-z])>[\s\S]+<(\/\2)>)/g;
+  static condition = /(<condition>[\s\S]+?<\/condition>\n\n)/g;
 
   // static condition = new RegExp(
   //   /\bif\b\(/.source + Patterns.value.source + Patterns.eq.source + Patterns.value.source + /\)/.source
@@ -25,11 +27,11 @@ export class Patterns {
 
 export default class PlaceholderParser extends String {
 
+  static prepare(text: string): Block[] {
+    return [];
+  }
+
   static parse(text: string) {
-    // console.log(text.split("\n\n")); - good after initial processing for sequential rendering maybe
-
-    // console.debug(text.split("\n\n"));
-
     return new PlaceholderParser(text)
       .resolveAttributes();
     // .resolveSets()
@@ -42,40 +44,32 @@ export default class PlaceholderParser extends String {
 
   private resolveAttributes(): string {
     let temp = this.valueOf();
-    let attributes = temp.match(Patterns.attributeLazy);
+    let blocks = temp.match(Patterns.condition);
+    let parsed = new Array<Block>();
 
-    let parsed = new Array<Condition>();
-    if (attributes) {
+    if (blocks) {
       // filter attributes to process each type separately
-      for (let attribute of attributes) {
+      for (let block of blocks) {
 
-        parseString(attribute, {
-          trim: true,
-          attrkey: "attributes",
-          charkey: "content",
-          explicitCharkey: true,
-          childkey: "nested",
-          explicitChildren: true,
-          explicitArray: false
-        }, function (err, result) {
-          parsed.push(new ConditionDTO(result.condition).nested);
-        });
+        // console.debug(block);
 
-        // console.debug(new DOMParser().parseFromString(attribute, "text/xml").getElementsByTagName("condition"));
-        // console.debug(new DOMParser().parseFromString(attribute, "text/xml").getElementsByTagName("condition")[0].children);
-
-        // parsed.push(new Conditional(temp));
-        // console.debug(parsed);
-        // if (attribute.includes("<condition>")) {
-        //
-        //   // try to resolve nested conditions without using special tags for it
-        //
-        //   temp = temp.replace(attribute, new Condition(attribute).resolve());
-        // }
+        if (block.includes("<condition>")) {
+          parseString(temp, {
+            trim: true,
+            attrkey: "attributes",
+            charkey: "content",
+            explicitCharkey: true,
+            explicitArray: false
+          }, function (err, result) {
+            parsed.push(Block.fromConditional(new Conditional(result.condition)));
+          });
+        } else {
+          parsed.push(new Block(block));
+        }
       }
     }
 
-    console.debug(parsed);
+    // console.debug(parsed);
 
     return temp;
   }
@@ -110,6 +104,22 @@ export default class PlaceholderParser extends String {
     return temp;
   }
 
+}
+
+function findClosingParen(text: string, openPos: number) {
+  let closePos = openPos;
+  let counter = 1;
+
+  while (counter > 0) {
+    let c = text[++closePos];
+
+    if (c === "{") {
+      counter++;
+    } else if (c === "}") {
+      counter--;
+    }
+  }
+  return closePos;
 }
 
 class Attribute {

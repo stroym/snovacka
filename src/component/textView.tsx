@@ -17,7 +17,7 @@ export default class TextView extends React.Component<TextAreaProps> {
   render() {
     return (
       <div ref={this.selfRef} id="snovacka-text-area">
-        <ReactMarkdown source={this.props.scene.text()}/>
+        <ReactMarkdown source={this.props.scene.render()}/>
       </div>
     );
   }

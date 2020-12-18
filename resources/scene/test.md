@@ -1,29 +1,26 @@
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aliquam libero et luctus consectetur.
-
-${eliza.appearance.mouth.capacity.width=111}
-
 <condition>
-<if condi="eliza.blob">
+<if condition="${eliza.appearance.breasts.cupSize}>4">
 if1
-
-<if condi="eliza.boob">
+<condition>
+<if condition="${eliza.appearance.breasts.cupSize}>4">
 if2
 </if>
 <else>
 else2
 </else>
-    
-<if condi="eliza.ppp">
+</condition>
+<condition>
+<if condition="${eliza.appearance.breasts.cupSize}>4">
 if3
 </if>
-    
+</condition>
 <set key="val1">beep</set>
 <set key="val1">boop</set>
 </if>
-<elif condi="eliza.boob">
+<elif condition="${eliza.appearance.breasts.cupSize}>4">
 elif1
 </elif>
-<elif condi="eliza.beep">
+<elif condition="${eliza.appearance.breasts.cupSize}>4">
 elif2
 </elif>
 <else>
@@ -31,7 +28,33 @@ else1
 </else>
 </condition>
 
-asdasdad
+<condition>
+<if condition="${eliza.appearance.breasts.cupSize}>4">
+if11
+<condition>
+<if condition="${eliza.appearance.breasts.cupSize}>4">
+if22
+</if>
+<else>
+else22
+</else>
+</condition>
+<condition>
+<if condition="${eliza.appearance.breasts.cupSize}>4">
+if33
+</if>
+</condition>
+<set key="val1">beep</set>
+<set key="val1">boop</set>
+</if>
+<elif condition="${eliza.appearance.breasts.cupSize}>4">
+elif1
+</elif>
+<elif condition="${eliza.appearance.breasts.cupSize}>4">
+elif2
+</elif>
+<else>
+else1
+</else>
+</condition>
 
-asdasdasd
-asdasdadas
