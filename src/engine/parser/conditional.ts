@@ -8,19 +8,13 @@ export default class Conditional {
   readonly else?: Stage;
 
   constructor(dto: ConditionalDTO) {
-    this.if = new ConditionalStage(dto.if);
+    this.if = new ConditionalStage(dto.if[0]);
 
-    if (dto.elif) {
-      if (Array.isArray(dto.elif)) {
-        dto.elif?.forEach(elif => {
-          this.elif.push(new ConditionalStage(elif));
-        });
-      } else {
-        this.elif.push(new ConditionalStage(dto.elif));
-      }
-    }
+    dto.elif?.forEach(elif => {
+      this.elif.push(new ConditionalStage(elif));
+    });
 
-    this.else = dto.else ? new Stage(dto.else) : undefined;
+    this.else = dto.else ? new Stage(dto.else[0]) : undefined;
   }
 
   evaluate(): string {
@@ -52,25 +46,13 @@ class Stage {
   constructor(dto: StageDTO) {
     this.content = dto.content ? dto.content : "";
 
-    if (dto.nested) {
-      if (Array.isArray(dto.nested)) {
-        dto.nested?.forEach(nested => {
-          this.nested.push(new Conditional(nested));
-        });
-      } else {
-        this.nested.push(new Conditional(dto.nested));
-      }
-    }
+    dto.nested?.forEach(nested => {
+      this.nested.push(new Conditional(nested));
+    });
 
-    if (dto.set) {
-      if (Array.isArray(dto.set)) {
-        dto.set?.forEach(nested => {
-          this.set.push(new Setter(nested));
-        });
-      } else {
-        this.set.push(new Setter(dto.set));
-      }
-    }
+    dto.set?.forEach(nested => {
+      this.set.push(new Setter(nested));
+    });
   }
 
   resolve(): string {
@@ -93,7 +75,7 @@ class ConditionalStage extends Stage {
 
   constructor(dto: StageDTO) {
     super(dto);
-    this.condition = new Condition(dto.condition);
+    this.condition = new Condition(dto.attributes.condition);
   }
 
   check(): boolean {
@@ -158,7 +140,7 @@ export class Setter {
   value: string;
 
   constructor(dto: SetterDTO) {
-    this.target = dto.key;
+    this.target = dto.attributes.key;
     this.value = dto.content;
   }
 

@@ -1,23 +1,35 @@
 export class ConditionalDTO {
 
-  if!: StageDTO;
-  elif?: StageDTO | StageDTO[];
-  else?: StageDTO;
+  if!: StageDTO[];
+  elif?: StageDTO[];
+  else?: StageDTO[];
 
 }
 
 export class StageDTO {
 
-  condition!: string;
+  attributes!: StageAttributesDTO;
   content?: string;
-  nested?: ConditionalDTO | ConditionalDTO[];
-  set?: SetterDTO | SetterDTO[];
+  nested?: ConditionalDTO[];
+  set?: SetterDTO[];
+
+}
+
+class StageAttributesDTO {
+
+  condition!: string;
 
 }
 
 export class SetterDTO {
 
-  key!: string;
+  attributes!: SetterAttributesDTO;
   content!: string;
+
+}
+
+class SetterAttributesDTO {
+
+  key!: string;
 
 }

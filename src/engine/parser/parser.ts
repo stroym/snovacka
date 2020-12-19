@@ -64,10 +64,8 @@ export default class PlaceholderString {
             attrkey: "attributes",
             charkey: "content",
             explicitCharkey: true,
-            explicitArray: false,
             tagNameProcessors: [renameNested],
             attrNameProcessors: [renameAttributeAliases],
-            mergeAttrs: true,
             explicitRoot: false
           }, function (err, result) {
             paragraphs.push(Paragraph.fromConditional(result));
