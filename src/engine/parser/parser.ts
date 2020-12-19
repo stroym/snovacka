@@ -66,9 +66,11 @@ export default class PlaceholderString {
             explicitCharkey: true,
             explicitArray: false,
             tagNameProcessors: [renameNested],
-            mergeAttrs: true
+            attrNameProcessors: [renameAttributeAliases],
+            mergeAttrs: true,
+            explicitRoot: false
           }, function (err, result) {
-            paragraphs.push(Paragraph.fromConditional(result.nested));
+            paragraphs.push(Paragraph.fromConditional(result));
           });
         } else {
           paragraphs.push(new Paragraph(block));
@@ -116,6 +118,16 @@ export default class PlaceholderString {
     return this;
   }
 
+}
+
+function renameAttributeAliases(name: string) {
+  if (name === "c") {
+    return "condition";
+  } else if (name === "k") {
+    return "key";
+  } else {
+    return name;
+  }
 }
 
 function renameNested(name: string) {

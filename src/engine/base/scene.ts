@@ -1,5 +1,5 @@
 import PlaceholderString from "../parser/parser";
-import Conditional, {ConditionalDTO} from "../parser/conditional";
+import Conditional from "../parser/conditional";
 
 export default class Scene {
 
@@ -74,7 +74,7 @@ export class Paragraph {
     return this._content;
   }
 
-  static fromConditional(dto: ConditionalDTO): Paragraph {
+  static fromConditional(dto: any): Paragraph {
     return new Paragraph("", new Conditional(dto));
   }
 

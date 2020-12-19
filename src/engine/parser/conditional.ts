@@ -1,27 +1,5 @@
 import PlaceholderString from "./parser";
-import {Setter} from "./placeholderXML";
-
-export class ConditionalDTO {
-
-  if!: ConditionalStageDTO;
-  elif?: ConditionalStageDTO[];
-  else?: StageDTO;
-
-}
-
-class StageDTO {
-
-  content?: string;
-  nested?: ConditionalDTO[];
-  set?: Setter[];
-
-}
-
-class ConditionalStageDTO extends StageDTO {
-
-  condition!: string;
-
-}
+import {ConditionalDTO, SetterDTO, StageDTO} from "./dto/ConditionalDTO";
 
 export default class Conditional {
 
@@ -32,9 +10,15 @@ export default class Conditional {
   constructor(dto: ConditionalDTO) {
     this.if = new ConditionalStage(dto.if);
 
-    dto.elif?.forEach(elif => {
-      this.elif.push(new ConditionalStage(elif));
-    });
+    if (dto.elif) {
+      if (Array.isArray(dto.elif)) {
+        dto.elif?.forEach(elif => {
+          this.elif.push(new ConditionalStage(elif));
+        });
+      } else {
+        this.elif.push(new ConditionalStage(dto.elif));
+      }
+    }
 
     this.else = dto.else ? new Stage(dto.else) : undefined;
   }
@@ -68,25 +52,37 @@ class Stage {
   constructor(dto: StageDTO) {
     this.content = dto.content ? dto.content : "";
 
-    dto.nested?.forEach(nest => {
-      this.nested.push(new Conditional(nest));
-    });
+    if (dto.nested) {
+      if (Array.isArray(dto.nested)) {
+        dto.nested?.forEach(nested => {
+          this.nested.push(new Conditional(nested));
+        });
+      } else {
+        this.nested.push(new Conditional(dto.nested));
+      }
+    }
 
     if (dto.set) {
-      this.set = dto.set;
+      if (Array.isArray(dto.set)) {
+        dto.set?.forEach(nested => {
+          this.set.push(new Setter(nested));
+        });
+      } else {
+        this.set.push(new Setter(dto.set));
+      }
     }
   }
 
   resolve(): string {
-    let text = this.content;
+    let parts = [this.content];
 
     if (this.nested) {
       this.nested.forEach(nested => {
-        text += nested.evaluate() + "\n\n";
+        parts.push(nested.evaluate());
       });
     }
 
-    return text.trim();
+    return parts.join("\n\n").trim();
   }
 
 }
@@ -95,7 +91,7 @@ class ConditionalStage extends Stage {
 
   private readonly condition: Condition;  //the condition statement
 
-  constructor(dto: ConditionalStageDTO) {
+  constructor(dto: StageDTO) {
     super(dto);
     this.condition = new Condition(dto.condition);
   }
@@ -152,6 +148,21 @@ class Condition {
       default:
         throw Error("Statement " + this.raw + " could not be resolved!");
     }
+  }
+
+}
+
+export class Setter {
+
+  target: string;
+  value: string;
+
+  constructor(dto: SetterDTO) {
+    this.target = dto.key;
+    this.value = dto.content;
+  }
+
+  set(): void {
   }
 
 }
