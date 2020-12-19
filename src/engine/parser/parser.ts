@@ -1,7 +1,6 @@
 import characters from "../data/characters";
 import {getPlaceholders, GetterPlaceholder, SetterPlaceholder} from "./placeholder";
 import {parseString} from "xml2js";
-import Conditional from "./conditional";
 import {Block} from "../base/scene";
 
 export class Patterns {
@@ -42,6 +41,10 @@ export default class PlaceholderParser extends String {
     return new PlaceholderParser(text).resolveGets();
   }
 
+  static parseSetsOnly(text: string) {
+    return new PlaceholderParser(text).resolveSets();
+  }
+
   private resolveAttributes(): string {
     let temp = this.valueOf();
     let blocks = temp.match(Patterns.condition);
@@ -59,9 +62,11 @@ export default class PlaceholderParser extends String {
             attrkey: "attributes",
             charkey: "content",
             explicitCharkey: true,
-            explicitArray: false
+            explicitArray: false,
+            tagNameProcessors: [renameNested],
+            mergeAttrs: true
           }, function (err, result) {
-            parsed.push(Block.fromConditional(new Conditional(result.condition)));
+            parsed.push(Block.fromConditional(result.nested));
           });
         } else {
           parsed.push(new Block(block));
@@ -69,7 +74,7 @@ export default class PlaceholderParser extends String {
       }
     }
 
-    // console.debug(parsed);
+    console.debug(parsed);
 
     return temp;
   }
@@ -104,6 +109,14 @@ export default class PlaceholderParser extends String {
     return temp;
   }
 
+}
+
+function renameNested(name: string) {
+  if (name === "condition") {
+    return "nested";
+  } else {
+    return name;
+  }
 }
 
 function findClosingParen(text: string, openPos: number) {
