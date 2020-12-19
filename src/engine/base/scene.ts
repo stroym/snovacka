@@ -1,4 +1,4 @@
-import PlaceholderParser from "../parser/parser";
+import PlaceholderString from "../parser/parser";
 import Conditional, {ConditionalDTO} from "../parser/conditional";
 
 export default class Scene {
@@ -45,10 +45,10 @@ export default class Scene {
     //don't postprocess if text is a function
 
     if (typeof this.text === "string") {
-      let paragraphs = PlaceholderParser.prepare(this.text);
-      let replaced = PlaceholderParser.parse(this.text); //TODO
+      let paragraphs = PlaceholderString.prepare(this.text);
+      let replaced = PlaceholderString.parse(this.text); //TODO
 
-      return () => replaced;
+      return () => replaced.text;
     } else {
       return this.text;
     }
@@ -56,8 +56,9 @@ export default class Scene {
 
 }
 
-export class Block {
+export class Paragraph {
 
+  private _content: string;
   condition?: Conditional;
 
   constructor(content: string, condition?: Conditional) {
@@ -65,20 +66,16 @@ export class Block {
     this.condition = condition;
   }
 
-  private _content: string;
-
   get content(): string {
-    if (!this.condition) {
-      return this._content;
-    } else {
-      //TODO resolve condition and return the relevant string
-      return "";
+    if (this.condition) {
+      this._content = this.condition.evaluate();
     }
+
+    return this._content;
   }
 
-  static fromConditional(dto: ConditionalDTO): Block {
-    return new Block("", new Conditional(dto));
+  static fromConditional(dto: ConditionalDTO): Paragraph {
+    return new Paragraph("", new Conditional(dto));
   }
 
 }
-

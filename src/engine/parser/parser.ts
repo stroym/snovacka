@@ -1,7 +1,7 @@
 import characters from "../data/characters";
 import {getPlaceholders, GetterPlaceholder, SetterPlaceholder} from "./placeholder";
 import {parseString} from "xml2js";
-import {Block} from "../base/scene";
+import {Paragraph} from "../base/scene";
 
 export class Patterns {
 
@@ -24,40 +24,42 @@ export class Patterns {
 
 }
 
-export default class PlaceholderParser extends String {
+export default class PlaceholderString {
 
-  static prepare(text: string): Block[] {
+  text: string;
+
+  constructor(text: string) {
+    this.text = text;
+  }
+
+  static prepare(text: string): Paragraph[] {
     return [];
   }
 
   static parse(text: string) {
-    return new PlaceholderParser(text)
-      .resolveAttributes();
-    // .resolveSets()
-    // .resolveGets();
+    return new PlaceholderString(text)
+      .resolveAttributes()
+      .resolveSets()
+      .resolveGets();
   }
 
-  static parseGetsOnly(text: string) {
-    return new PlaceholderParser(text).resolveGets();
+  static parseGetsOnly(text: string): string {
+    return new PlaceholderString(text).resolveGets().text;
   }
 
-  static parseSetsOnly(text: string) {
-    return new PlaceholderParser(text).resolveSets();
+  static parseSetsOnly(text: string): string {
+    return new PlaceholderString(text).resolveSets().text;
   }
 
-  private resolveAttributes(): string {
-    let temp = this.valueOf();
-    let blocks = temp.match(Patterns.condition);
-    let parsed = new Array<Block>();
+  private resolveAttributes(): PlaceholderString {
+    let blocks = this.text.match(Patterns.condition);
+    let paragraphs = new Array<Paragraph>();
 
     if (blocks) {
       // filter attributes to process each type separately
       for (let block of blocks) {
-
-        // console.debug(block);
-
         if (block.includes("<condition>")) {
-          parseString(temp, {
+          parseString(block, {
             trim: true,
             attrkey: "attributes",
             charkey: "content",
@@ -66,47 +68,52 @@ export default class PlaceholderParser extends String {
             tagNameProcessors: [renameNested],
             mergeAttrs: true
           }, function (err, result) {
-            parsed.push(Block.fromConditional(result.nested));
+            paragraphs.push(Paragraph.fromConditional(result.nested));
           });
         } else {
-          parsed.push(new Block(block));
+          paragraphs.push(new Paragraph(block));
         }
       }
     }
 
-    console.debug(parsed);
+    console.log(paragraphs);
 
-    return temp;
+    let stringy = "";
+
+    paragraphs.forEach(block => {
+      stringy += block.content + "\n\n";
+    });
+
+    this.text = stringy;
+    return this;
   }
 
-  private resolveSets(): string {
-    let temp = this.valueOf();
-    let placeholders = getPlaceholders(temp, Patterns.placeholderSet, (value: string) => {
+  private resolveSets(): PlaceholderString {
+    let placeholders = getPlaceholders(this.text, Patterns.placeholderSet, (value: string) => {
       return new SetterPlaceholder(value);
     });
 
-    console.debug(placeholders);
+    // console.debug(placeholders);
 
     placeholders.forEach(p => {
-      temp = p.update(characters, temp);
+      this.text = p.update(characters, this.text);
     });
 
-    return temp;
+    return this;
   }
 
-  private resolveGets(): string {
-    let temp = this.valueOf();
-    let placeholders = getPlaceholders(temp, Patterns.placeholderGet, (value: string) => {
+  private resolveGets(): PlaceholderString {
+    let placeholders = getPlaceholders(this.text, Patterns.placeholderGet, (value: string) => {
       return new GetterPlaceholder(value);
     });
 
     // console.debug(placeholders);
 
     placeholders.forEach(p => {
-      temp = p.replace(characters, temp);
+      this.text = p.replace(characters, this.text);
     });
 
-    return temp;
+    return this;
   }
 
 }
@@ -117,55 +124,4 @@ function renameNested(name: string) {
   } else {
     return name;
   }
-}
-
-function findClosingParen(text: string, openPos: number) {
-  let closePos = openPos;
-  let counter = 1;
-
-  while (counter > 0) {
-    let c = text[++closePos];
-
-    if (c === "{") {
-      counter++;
-    } else if (c === "}") {
-      counter--;
-    }
-  }
-  return closePos;
-}
-
-class Attribute {
-
-  name: string; //enum/isX methods?
-  content: string;
-  nested: Attribute[] = new Array<Attribute>();
-  parts: string[] = new Array<string>();
-
-  //array/map for content and children tags - but you need to keep track of their order
-
-  constructor(str: string) {
-    this.name = str.substring(str.indexOf("<") + 1, str.indexOf(">")).trim();
-    this.content = str.substring(str.indexOf(">") + 1, str.lastIndexOf("</")).trim();
-
-    this.findChildren();
-  }
-
-  //this works when there's no same-tag nesting happening... which shouldn't happend in attributes
-  findChildren(): string[] {
-    let temp = this.content.match(Patterns.attribute);
-
-    if (temp) {
-      for (let attribute of temp) {
-        this.nested.push(new Attribute(attribute));
-      }
-    }
-
-    return temp ? temp : [];
-  }
-
-  toString(): string {
-    return this.name + "\n" + this.nested;
-  }
-
 }

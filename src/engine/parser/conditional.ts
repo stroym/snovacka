@@ -1,4 +1,4 @@
-import PlaceholderParser from "./parser";
+import PlaceholderString from "./parser";
 import {Setter} from "./placeholderXML";
 
 export class ConditionalDTO {
@@ -40,19 +40,20 @@ export default class Conditional {
   }
 
   evaluate(): string {
-    if (this.if) {
+    if (this.if.check()) {
       return this.if.resolve();
     } else if (this.elif) {
-      this.elif.forEach(elif => {
-        return elif.resolve();
-      });
+      for (let elif of this.elif) {
+        if (elif.check()) {
+          return elif.resolve();
+        }
+      }
     }
 
     if (this.else) {
       return this.else.resolve();
     } else {
-      //TODO possibly return undefined?
-      return ""; //no condition was true and no else is present
+      return "";
     }
   }
 
@@ -85,7 +86,7 @@ class Stage {
       });
     }
 
-    return PlaceholderParser.parse(text);
+    return text.trim();
   }
 
 }
@@ -99,12 +100,12 @@ class ConditionalStage extends Stage {
     this.condition = new Condition(dto.condition);
   }
 
-  resolve(): string {
+  check(): boolean {
     let result = this.condition.compare();
 
-    console.debug("→ " + result);
+    console.debug("→ " + result); //TODO re/move
 
-    return result ? PlaceholderParser.parse(this.content) : "";
+    return this.condition.compare();
   }
 
 }
@@ -130,8 +131,8 @@ class Condition {
   compare(): boolean {
     let type = this.raw.match(/([!=<>]+)/)![0].trim();
     let c = this.raw.split(type);
-    let left = PlaceholderParser.parseGetsOnly(c[0].trim());
-    let right = PlaceholderParser.parseGetsOnly(c[1].trim());
+    let left = PlaceholderString.parseGetsOnly(c[0].trim());
+    let right = PlaceholderString.parseGetsOnly(c[1].trim());
 
     console.debug(this.raw + " → " + left + " " + type + " " + right);
 
@@ -149,9 +150,7 @@ class Condition {
       case Comparison.GE:
         return left >= right;
       default:
-        //TODO throw exception?
-        console.warn("Statement " + this.raw + " could not be resolved! Returning false...");
-        return false;
+        throw Error("Statement " + this.raw + " could not be resolved!");
     }
   }
 
