@@ -1,8 +1,8 @@
 import React from "react";
-import SelectionsContainer from "./selectionsContainer";
-import Scene from "../engine/base/scene";
-import TextView from "./textView";
-import {intro} from "../engine/data/scenes";
+import SelectionsContainer from "./SelectionsContainer";
+import Scene from "../engine/base/Scene";
+import TextView from "./TextView";
+import {intro} from "../engine/data/Scenes";
 
 export default class Screenplay extends React.Component<{}, ChildContentProps> {
 

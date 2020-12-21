@@ -1,5 +1,5 @@
 import React from "react";
-import Screenplay from "./screenplay";
+import Screenplay from "./Screenplay";
 
 export default class GameContainer extends React.Component {
 

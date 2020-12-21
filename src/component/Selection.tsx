@@ -1,5 +1,5 @@
 import React from "react";
-import Scene from "../engine/base/scene";
+import Scene from "../engine/base/Scene";
 
 export default class Selection extends React.Component<OptionProps> {
 

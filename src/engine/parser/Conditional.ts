@@ -1,4 +1,4 @@
-import PlaceholderString from "./parser";
+import PlaceholderString from "./Parser";
 import {ConditionalDTO, SetterDTO, StageDTO} from "./dto/ConditionalDTO";
 
 export default class Conditional {

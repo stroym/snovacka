@@ -1,4 +1,4 @@
-import {Contents, Penetrable, Virgin} from "./penetrable";
+import {Contents, Penetrable, Virgin} from "./Penetrable";
 
 export class Size {
 

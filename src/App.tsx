@@ -1,12 +1,12 @@
 import React from "react";
-import "./app.css";
-import GameContainer from "./component/gameContainer";
-import SideBar from "./component/sideBar";
+import "./App.css";
+import GameContainer from "./component/GameContainer";
+import Sidebar from "./component/Sidebar";
 
 function App() {
   return (
     <div id="snovacka-app">
-      <SideBar/>
+      <Sidebar/>
       <GameContainer/>
     </div>
   );

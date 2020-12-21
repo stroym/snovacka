@@ -1,5 +1,5 @@
-import {Vagina} from "./penetrable";
-import {Penis} from "./insertable";
+import {Vagina} from "./Penetrable";
+import {Penis} from "./Insertable";
 
 //TODO this is probably the way to handle characters' "equipment" properly - multiples are definitely possible...
 // (actually the same goes for a lot of things: hands, heads, legs, boobs, eyes...)

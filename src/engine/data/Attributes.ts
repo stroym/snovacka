@@ -1,4 +1,4 @@
-import {Attribute, Threshold} from "../base/character/attributes";
+import {Attribute, Threshold} from "../base/character/Attributes";
 
 export class Muscularity extends Attribute {
 

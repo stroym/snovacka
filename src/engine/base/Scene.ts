@@ -1,5 +1,5 @@
-import PlaceholderString from "../parser/parser";
-import Conditional from "../parser/conditional";
+import PlaceholderString, {SceneString} from "../parser/Parser";
+import Conditional from "../parser/Conditional";
 
 export default class Scene {
 
@@ -19,7 +19,7 @@ export default class Scene {
    * @param parents - scenes that can access this scene
    * @param text - text to be rendered
    */
-  constructor(id: string, prompt: string, text: string | (() => string), parents: Scene | Scene[]) {
+  constructor(id: string, prompt: string, text: string | (() => string), parents: Scene | Scene[]) { //| string
     this.id = id;
     this.prompt = prompt;
     this.text = text;
@@ -33,6 +33,19 @@ export default class Scene {
     }
   }
 
+  get render(): () => string {
+    //don't postprocess if text is a function
+
+    if (typeof this.text === "string") {
+      let paragraphs = PlaceholderString.prepare(this.text);
+      let replaced = PlaceholderString.parse(this.text); //TODO
+
+      return () => replaced;
+    } else {
+      return this.text;
+    }
+  }
+
   addScene(scene: Scene) {
     this.children.push(scene);
   }
@@ -41,41 +54,37 @@ export default class Scene {
     this.children.concat(scenes);
   }
 
-  get render(): () => string {
-    //don't postprocess if text is a function
-
-    if (typeof this.text === "string") {
-      let paragraphs = PlaceholderString.prepare(this.text);
-      let replaced = PlaceholderString.parse(this.text); //TODO
-
-      return () => replaced.text;
-    } else {
-      return this.text;
-    }
+  //TODO
+  static fromFile(file: string): Scene {
+    return SceneString.parse(file);
   }
 
 }
 
 export class Paragraph {
 
-  private _content: string;
-  condition?: Conditional;
+  private readonly _content: string | Conditional;
 
-  constructor(content: string, condition?: Conditional) {
+  constructor(content: string | Conditional) {
     this._content = content;
-    this.condition = condition;
   }
 
   get content(): string {
-    if (this.condition) {
-      this._content = this.condition.evaluate();
-    }
-
-    return this._content;
+    return this._content instanceof Conditional ? this._content.evaluate() : this._content;
   }
 
-  static fromConditional(dto: any): Paragraph {
-    return new Paragraph("", new Conditional(dto));
+  static fromParts(parts: string[]): Paragraph[] {
+    let p = [];
+
+    for (const part of parts) {
+      if (part.includes("<condition>")) {
+        p.push(new Paragraph(PlaceholderString.parse(part)));
+      } else {
+        p.push(new Paragraph(part));
+      }
+    }
+
+    return p;
   }
 
 }

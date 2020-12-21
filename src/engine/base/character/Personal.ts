@@ -1,4 +1,4 @@
-import {Archetype, Descriptions} from "./character";
+import {Archetype, Descriptions} from "./Character";
 
 export default class Personal {
 

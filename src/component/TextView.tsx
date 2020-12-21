@@ -1,6 +1,6 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
-import Scene from "../engine/base/scene";
+import Scene from "../engine/base/Scene";
 
 //TODO additive rendering support
 export default class TextView extends React.Component<TextAreaProps> {

@@ -1,7 +1,9 @@
-import characters from "../data/characters";
-import {getPlaceholders, GetterPlaceholder, SetterPlaceholder} from "./placeholder";
+import characters from "../data/Characters";
+import {getPlaceholders, GetterPlaceholder, SetterPlaceholder} from "./Placeholder";
 import {parseString} from "xml2js";
-import {Paragraph} from "../base/scene";
+import Scene, {Paragraph} from "../base/Scene";
+import {intro} from "../data/Scenes";
+import Conditional from "./Conditional";
 
 export class Patterns {
 
@@ -15,12 +17,8 @@ export class Patterns {
 
   static attributeLazy = /(<([a-z])>[\s\S]+?<(\/\2)>)/g;
   static attribute = /(<([a-z])>[\s\S]+<(\/\2)>)/g;
+  static head = /(<head>[\s\S]+?<\/head>)/;
   static condition = /(<condition>[\s\S]+?<\/condition>\n\n)/g;
-
-  // static condition = new RegExp(
-  //   /\bif\b\(/.source + Patterns.value.source + Patterns.eq.source + Patterns.value.source + /\)/.source
-  //   + /[{]\s*.*\s*[}]/.source, "g"
-  // );
 
 }
 
@@ -36,11 +34,12 @@ export default class PlaceholderString {
     return [];
   }
 
-  static parse(text: string) {
+  static parse(text: string): string {
     return new PlaceholderString(text)
-      .resolveAttributes()
+      .resolveConditionals()
       .resolveSets()
-      .resolveGets();
+      .resolveGets()
+      .text;
   }
 
   static parseGetsOnly(text: string): string {
@@ -51,12 +50,12 @@ export default class PlaceholderString {
     return new PlaceholderString(text).resolveSets().text;
   }
 
-  private resolveAttributes(): PlaceholderString {
+  //TODO probably move to scenestring
+  private resolveConditionals(): PlaceholderString {
     let blocks = this.text.match(Patterns.condition);
     let paragraphs = new Array<Paragraph>();
 
     if (blocks) {
-      // filter attributes to process each type separately
       for (let block of blocks) {
         if (block.includes("<condition>")) {
           parseString(block, {
@@ -68,7 +67,7 @@ export default class PlaceholderString {
             attrNameProcessors: [renameAttributeAliases],
             explicitRoot: false
           }, function (err, result) {
-            paragraphs.push(Paragraph.fromConditional(result));
+            paragraphs.push(new Paragraph(new Conditional(result)));
           });
         } else {
           paragraphs.push(new Paragraph(block));
@@ -76,7 +75,7 @@ export default class PlaceholderString {
       }
     }
 
-    console.log(paragraphs);
+    // console.log(paragraphs);
 
     let stringy = "";
 
@@ -114,6 +113,18 @@ export default class PlaceholderString {
     });
 
     return this;
+  }
+
+}
+
+export class SceneString {
+
+  static parse(text: string): Scene {
+    let [empty, head, rest] = text.split(Patterns.head);
+    let paragraphs = Paragraph.fromParts(rest.split(Patterns.condition));
+
+    console.log(empty, head, rest);
+    return new Scene("", "", "", intro);
   }
 
 }

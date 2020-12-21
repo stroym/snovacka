@@ -1,6 +1,6 @@
-import Attributes from "./attributes";
-import Appearance from "./appearance/appearance";
-import Personal from "./personal";
+import Attributes from "./Attributes";
+import Appearance from "./appearance/Appearance";
+import Personal from "./Personal";
 
 abstract class Character<A extends Appearance> {
 
